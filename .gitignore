@@ -1,3 +1,5 @@
+*.DS_Store
+
 *.py[cod]
 
 # C extensions
@@ -34,3 +36,11 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Data
+*.csv
+test_data/
+train_data/
+
+# Vim
+*.un~
