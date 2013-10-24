@@ -1,6 +1,9 @@
-import baseline, util
+import baseline, util, pdb
 
 if __name__ == '__main__':
-    trainingSets = util.loadTrainingSets('xzz')
-    classifiers = baseline.learnOneVsAllClassifiers( trainingSets, baseline.extractBigramFeatuers, labels, 5)
-
+    trainingSets, tags = util.loadTrainingSets('xzz')
+    pdb.set_trace()
+    classifiers = baseline.learnOneVsAllClassifiers(trainingSets,
+                                                    baseline.extractUnigramFeatuers,
+                                                    tags,
+                                                    5)

@@ -6,6 +6,17 @@ cs221 final project
 the project proposal will go here.
 For now it's in a google doc.
 
+What we need to figure out
+==========================
+How to determine how many tags to give a question.
+    - there needs to be at least one
+    - learn the distribution of the number of tags
+    - learn what makes a question have many tags.
+        - e.g. History questions only have 1-3 tags,
+               but coding questions have 4-7
+    - learn what makes a question have more tags. Should it
+      simply be the tags that pass a certain threshold?
+
 I split up the training data using
 split -l 355100 Train.csv
 

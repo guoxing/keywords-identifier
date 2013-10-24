@@ -8,13 +8,15 @@ import os, random, operator, collections, pdb, csv
 # where tags are all the tags in the training set
 def loadTrainingSets(filename):
     trainingSets = []
-    tags = []
+    tags = set()
     with open('train_data/' + filename, 'rb') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
-            pdb.set_trace()
             trainingSets.append(row)
+            for tag in row[3].split():
+                tags.add(tag)
     return (trainingSets, tags)
+    # in xzz there are 3980 tags, 1694 of which are unique
 
 def computeErrorRate(examples, classifier):
     """
