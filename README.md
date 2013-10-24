@@ -6,6 +6,16 @@ cs221 final project
 the project proposal will go here.
 For now it's in a google doc.
 
+Set up
+======
+Download the data and split it.
+sudo pip install -U scikit-learn
+git clone https://github.com/matplotlib/matplotlib.git
+cd matplotlib
+python setup.py build
+python setup.py install
+
+
 What we need to figure out
 ==========================
 How to determine how many tags to give a question.
