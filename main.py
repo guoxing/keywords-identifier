@@ -1,5 +1,6 @@
 import util, pdb, re
 import numpy as np
+import matplotlib.pyplot as plt
 
 from HTMLParser import HTMLParser
 
@@ -82,14 +83,29 @@ def printPrediction(X, predicted):
     for labels in labelsArray:
         print repr(labels)
 
-def scorePrediction(predicted, Y_train):
+def plotPrediction(predicted, Y_train):
     print "There are %d predictions" % len(predicted)
-    correctCount = 0
+    X_labels = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-90", "90-100"]
+    frequencies = [0]*10
     for index, prediction in enumerate(predicted):
-        pdb.set_trace()
-        if predicted[index] == Y_train[index]:
-            correctCount += 1
-    print "\nScore: " + str(float(correctCount) / float(len(predicted)))
+        numTags = max(len(Y_train[index]), len(predicted[index]))
+        correctCount = 0
+        for i in range(len(predicted[index])):
+            if predicted[index][i] in Y_train[index]:
+                correctCount += 1
+        percentCorrect = float(correctCount) / float(numTags)
+        bucketIndex = int(10*percentCorrect)
+        if bucketIndex == 10:
+            bucketIndex = 9 # put 100% in the last bucket
+        frequencies[bucketIndex] += 1
+    pos = np.arange(len(X_labels))
+    width = 1.0 # gives histogram aspect to the bar diagram
+    ax = plt.axes()
+    ax.set_xticks(pos + (width / 2))
+    ax.set_xticklabels(X_labels)
+    plt.bar(pos, frequencies, width, color='r')
+    plt.show()
+    # TODO the histogram of predictions that predicted too many tags
 
 if __name__ == '__main__':
     trainingSet = util.loadTrainingSet('xzz')
@@ -103,6 +119,6 @@ if __name__ == '__main__':
     print "Fit the training data"
     predicted = classifier.predict(X_train)
     #printPrediction(X_train, predicted)
-    scorePrediction(predicted, Y_train)
+    plotPrediction(predicted, Y_train)
     #predicted = classifier.predict(X_test)
     #printPrediction(X_test, predicted)
