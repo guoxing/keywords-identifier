@@ -3,11 +3,28 @@ CS221 2013
 AssignmentID: spam
 """
 
-import pdb
-import sys
-import util
-import operator
+import pdb, sys, operator, csv
 from collections import defaultdict
+
+# The data files were generated via split -l 355100 Train.csv
+# That leaves partial CSV entries on the top and bottom of
+# each file, so delete these partial entries by hand before loading
+# the CSV files
+
+
+def loadTrainingData(filename):
+    trainingSet = []
+    with open('train_data/' + filename, 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+        for row in reader:
+            trainingSet.append(row)
+    return trainingSet
+
+def main():
+    trainingData = loadTrainingData('xzz')
+
+if __name__ == '__main__':
+    main()
 
 class Classifier(object):
     def __init__(self, labels):
@@ -207,11 +224,6 @@ class MultiClassClassifier(object):
         @return list (string, double): list of labels with scores
         """
         raise NotImplementedError
-        result = []
-        for i in range(len(self._classifiers)):
-            classifier = self._classifiers[i]
-            result.append((self._labels[i], classifier.classify(x)))
-        return result
 
     def classifyWithLabel(self, x):
         """
