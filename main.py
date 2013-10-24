@@ -1,5 +1,5 @@
+import util, pdb, re
 import numpy as np
-import baseline, util, pdb, re
 
 from HTMLParser import HTMLParser
 
@@ -69,6 +69,28 @@ def mergeTitlesAndBodies(dataset, isTrain=True): # vs. isTest
     else:
         return X
 
+def printPrediction(X, predicted):
+    labelsArray = []
+    count = 0
+    for item, labels in zip(X, predicted):
+        if len(labels) > 0:
+            count += 1
+            print '%s\n=> %s\n\n' % (item, ', '.join(labels))
+            labelsArray.append(labels)
+    print "Out of %d predictions, %d of them have labels." % (len(predicted), count)
+    print "====================================================="
+    for labels in labelsArray:
+        print repr(labels)
+
+def scorePrediction(predicted, Y_train):
+    print "There are %d predictions" % len(predicted)
+    correctCount = 0
+    for index, prediction in enumerate(predicted):
+        pdb.set_trace()
+        if predicted[index] == Y_train[index]:
+            correctCount += 1
+    print "\nScore: " + str(float(correctCount) / float(len(predicted)))
+
 if __name__ == '__main__':
     trainingSet = util.loadTrainingSet('xzz')
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
@@ -79,8 +101,8 @@ if __name__ == '__main__':
     print "Parsed the testing data"
     classifier.fit(X_train, Y_train)
     print "Fit the training data"
-    predicted = classifier.predict(X_test)
-    count = 0
-    for item, labels in zip(X_test, predicted)[:20]:
-        if len(labels) > 0:
-            print '%s => %s' % (item, ', '.join(labels))
+    predicted = classifier.predict(X_train)
+    #printPrediction(X_train, predicted)
+    scorePrediction(predicted, Y_train)
+    #predicted = classifier.predict(X_test)
+    #printPrediction(X_test, predicted)
