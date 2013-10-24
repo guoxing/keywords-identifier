@@ -30,6 +30,9 @@ How to determine how many tags to give a question.
 I split up the training data using
 split -l 355100 Train.csv
 
+I split up the testing set using
+split -l 100000 Test.csv
+
 Features in order of how much we estimate the feature will contribute to classification:
 e.g.
     - question contains code markup

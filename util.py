@@ -4,18 +4,25 @@ import os, random, operator, collections, pdb, csv
 # That leaves partial CSV entries on the top and bottom of
 # each file, so delete these partial entries by hand before loading
 # the CSV files
-# returns (trainingSets, tags)
+# returns (trainingSet, tags)
 # where tags are all the tags in the training set
-def loadTrainingSets(filename):
-    trainingSets = []
+def loadTrainingSet(filename):
+    trainingSet = []
     tags = set()
     with open('train_data/' + filename, 'rb') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
-            trainingSets.append(row)
-            for tag in row[3].split():
-                tags.add(tag)
-    return (trainingSets, tags)
+            trainingSet.append(row)
+    return trainingSet
+    # in xzz there are 3980 tags, 1694 of which are unique
+
+def loadTestingSet(filename):
+    testingSet = []
+    with open('test_data/' + filename, 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+        for row in reader:
+            testingSet.append(row)
+    return testingSet
     # in xzz there are 3980 tags, 1694 of which are unique
 
 def computeErrorRate(examples, classifier):
