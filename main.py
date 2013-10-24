@@ -85,8 +85,12 @@ def printPrediction(X, predicted):
 
 def plotPrediction(predicted, Y_train):
     print "There are %d predictions" % len(predicted)
-    X_labels = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-90", "90-100"]
-    frequencies = [0]*10
+    #X_labels = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-90", "90-100"]
+    X_labels = 100*[0]
+    for i in range(100):
+        X_labels[i] = str(i)
+    #frequencies = [0]*10
+    frequencies = [0]*100
     for index, prediction in enumerate(predicted):
         numTags = max(len(Y_train[index]), len(predicted[index]))
         correctCount = 0
@@ -94,14 +98,14 @@ def plotPrediction(predicted, Y_train):
             if predicted[index][i] in Y_train[index]:
                 correctCount += 1
         percentCorrect = float(correctCount) / float(numTags)
-        bucketIndex = int(10*percentCorrect)
-        if bucketIndex == 10:
-            bucketIndex = 9 # put 100% in the last bucket
+        bucketIndex = int(100*percentCorrect)
+        if bucketIndex == 100:
+            bucketIndex = 99 # put 100% in the last bucket
         frequencies[bucketIndex] += 1
     pos = np.arange(len(X_labels))
     width = 1.0 # gives histogram aspect to the bar diagram
     ax = plt.axes()
-    ax.set_xticks(pos + (width / 2))
+    ax.set_xticks(pos + (width / 2)) # center the ticks
     ax.set_xticklabels(X_labels)
     plt.bar(pos, frequencies, width, color='r')
     plt.show()
@@ -118,7 +122,6 @@ if __name__ == '__main__':
     classifier.fit(X_train, Y_train)
     print "Fit the training data"
     predicted = classifier.predict(X_train)
-    #printPrediction(X_train, predicted)
+    printPrediction(X_train, predicted)
     plotPrediction(predicted, Y_train)
-    #predicted = classifier.predict(X_test)
-    #printPrediction(X_test, predicted)
+    predicted = classifier.predict(X_test)
