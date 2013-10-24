@@ -111,6 +111,10 @@ def plotPrediction(predicted, Y_train):
     plt.show()
     # TODO the histogram of predictions that predicted too many tags
 
+
+# TODO I ran the classifier on the whole training set for ten minutes
+# until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
+# decode byte 0xe2 in position 45: ordinal not in range(128).
 if __name__ == '__main__':
     trainingSet = util.loadTrainingSet('xzz')
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
@@ -124,4 +128,3 @@ if __name__ == '__main__':
     predicted = classifier.predict(X_train)
     printPrediction(X_train, predicted)
     plotPrediction(predicted, Y_train)
-    predicted = classifier.predict(X_test)
