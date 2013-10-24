@@ -42,8 +42,7 @@ def stripHTMLTags(html):
 def stripNewlines(str):
     return re.sub(r'\n', '', str)
 
-# for now, disregard the id
-def mergeTitlesAndBodies(dataset, isTrain=True): # vs. isTest
+def mergeTitlesAndBodies(dataset):
     # each entry in the trainingSet looks like this
     # ['996004',
     #  '.NET Dictionary: is only enumerating thread safe?',
@@ -53,22 +52,15 @@ def mergeTitlesAndBodies(dataset, isTrain=True): # vs. isTest
     X = []
     Y = []
     for example in dataset:
-        if isTrain:
-            id, title, body, tags = example
-        else:
-            id, title, body = example
+        id, title, body, tags = example
         title = stripHTMLTags(title)
         body = stripNewlines(body)
         body = stripHTMLTags(body)
         X.append(title + ' ' + body)
-        if isTrain:
-            Y.append(tags.split())
+        Y.append(tags.split())
     X = np.array(X)
     Y = np.array(Y)
-    if isTrain:
-        return (X, Y)
-    else:
-        return X
+    return (X, Y)
 
 def printPrediction(X, predicted):
     labelsArray = []
@@ -85,11 +77,9 @@ def printPrediction(X, predicted):
 
 def plotPrediction(predicted, Y_train):
     print "There are %d predictions" % len(predicted)
-    #X_labels = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-90", "90-100"]
     X_labels = 100*[0]
     for i in range(100):
         X_labels[i] = str(i)
-    #frequencies = [0]*10
     frequencies = [0]*100
     for index, prediction in enumerate(predicted):
         numTags = max(len(Y_train[index]), len(predicted[index]))
@@ -111,7 +101,6 @@ def plotPrediction(predicted, Y_train):
     plt.show()
     # TODO the histogram of predictions that predicted too many tags
 
-
 # TODO I ran the classifier on the whole training set for ten minutes
 # until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
 # decode byte 0xe2 in position 45: ordinal not in range(128).
@@ -120,11 +109,12 @@ if __name__ == '__main__':
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
     print "Parsed the training data"
     classifier = multiLabelClassifier(X_train, Y_train)
-    testingSet = util.loadTestingSet('xxa')
-    X_test = mergeTitlesAndBodies(testingSet, isTrain=False)
+    testingSet = util.loadTrainingSet('xwi')
+    X_test, Y_test = mergeTitlesAndBodies(testingSet)
+    pdb.set_trace()
     print "Parsed the testing data"
     classifier.fit(X_train, Y_train)
     print "Fit the training data"
-    predicted = classifier.predict(X_train)
-    printPrediction(X_train, predicted)
-    plotPrediction(predicted, Y_train)
+    predicted = classifier.predict(X_test)
+    #printPrediction(X_test, predicted)
+    plotPrediction(predicted, Y_test)

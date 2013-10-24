@@ -16,15 +16,6 @@ def loadTrainingSet(filename):
     return trainingSet
     # in xzz there are 3980 tags, 1694 of which are unique
 
-def loadTestingSet(filename):
-    testingSet = []
-    with open('test_data/' + filename, 'rb') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        for row in reader:
-            testingSet.append(row)
-    return testingSet
-    # in xzz there are 3980 tags, 1694 of which are unique
-
 def computeErrorRate(examples, classifier):
     """
     @param list examples

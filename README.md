@@ -15,7 +15,6 @@ cd matplotlib
 python setup.py build
 python setup.py install
 
-
 What we need to figure out
 ==========================
 How to determine how many tags to give a question.
@@ -32,6 +31,12 @@ split -l 355100 Train.csv
 
 I split up the testing set using
 split -l 100000 Test.csv
+
+Note that the competitive success of our algorithm will
+likely depend most on how we can apply domain knowledge
+to select our features. For example, we may want to predict
+how many tags a question has, and use that to inform
+the threshold for labeling.
 
 Features in order of how much we estimate the feature will contribute to classification:
 e.g.
