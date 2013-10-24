@@ -3,7 +3,7 @@ CS221 2013
 AssignmentID: spam
 """
 
-import pdb, sys, operator, csv
+import pdb, sys, operator
 from collections import defaultdict
 
 class Classifier(object):
