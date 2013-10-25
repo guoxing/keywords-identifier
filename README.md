@@ -6,6 +6,10 @@ cs221 final project
 the project proposal will go here.
 For now it's in a google doc.
 
+Dependencies
+============
+- scikit-learn
+
 Set up
 ======
 Download the data and split it.

@@ -1,4 +1,9 @@
-import os, random, operator, collections, pdb, csv
+import collections
+import csv
+import operator
+import os
+import pdb
+import random
 
 # The data files were generated via split -l 355100 Train.csv
 # That leaves partial CSV entries on the top and bottom of

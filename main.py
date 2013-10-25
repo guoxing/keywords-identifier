@@ -1,14 +1,15 @@
-import util, pdb, re
-import numpy as np
-import matplotlib.pyplot as plt
-
 from HTMLParser import HTMLParser
-
-from sklearn.pipeline import Pipeline
-from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.multiclass import OneVsRestClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.svm import LinearSVC
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pdb
+import re
+import util
 
 def multiLabelClassifier(X_train, Y_train, ngram_range=None):
     if ngram_range:
