@@ -24,7 +24,7 @@ Testing and Continuous Integration
 When changes are pushed to Github, the new code is tested on the complete training and test data sets.
 
 tagger CI (Jenkins):
-http://i12a.com:8080/job/tagger/
+http://ci.i12a.com/job/tagger/
 
 TODO(roseperrone): grant repo access to Jenkins server
 
