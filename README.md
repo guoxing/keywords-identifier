@@ -19,6 +19,15 @@ cd matplotlib
 python setup.py build
 python setup.py install
 
+Testing and Continuous Integration
+==================================
+When changes are pushed to Github, the new code is tested on the complete training and test data sets.
+
+tagger CI (Jenkins):
+http://i12a.com:8080/job/tagger/
+
+TODO(roseperrone): grant repo access to Jenkins server
+
 What we need to figure out
 ==========================
 How to determine how many tags to give a question.
