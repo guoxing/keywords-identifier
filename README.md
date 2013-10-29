@@ -10,6 +10,20 @@ Dependencies
 ============
 - scikit-learn
 
+Note
+====
+A CS221 instructor said, "For the CS221 project, we
+have strict policy that at most 2 students do the work.
+You can share some of the code infrastructure with the
+CS229 project, but will need to clearly separate an
+interesting problem on which only two of you will be
+working for the CS221 project."
+
+After we try a few more classification schemes and test
+some features, Brian and I will take a part of the
+project to work on that will be separate from what
+Ben, Guoxing, and I will be working on.
+
 Set up
 ======
 Download the data and split it.
