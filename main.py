@@ -106,7 +106,7 @@ def plotPrediction(predicted, Y_train):
 # until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
 # decode byte 0xe2 in position 45: ordinal not in range(128).
 if __name__ == '__main__':
-    trainingSet = util.loadTrainingSet('xzz')
+    trainingSet = util.loadTrainingSet('xaa')
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
     print "Parsed the training data"
     classifier = multiLabelClassifier(X_train, Y_train)
