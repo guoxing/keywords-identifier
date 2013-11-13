@@ -76,23 +76,40 @@ def printPrediction(X, predicted):
     for labels in labelsArray:
         print repr(labels)
 
+def printResultsTable(frequencies, numPredictions):
+    print ""
+    print "------------------"
+    print "0:       %.2f" % ( 100 * (float(frequencies[0]) / float(numPredictions)))
+    print "1-25:    %.3f" % ( 100 * (float(sum(frequencies[1:25])) / float(numPredictions)))
+    print "25-50:   %.3f" % ( 100 * (float(sum(frequencies[25:50])) / float(numPredictions)))
+    print "50-75:   %.3f" % ( 100 * (float(sum(frequencies[50:75])) / float(numPredictions)))
+    print "75-100:  %.3f" % ( 100 * (float(sum(frequencies[75:100])) / float(numPredictions)))
+    print "------------------"
+    print ""
+
 def plotPrediction(predicted, Y_train):
     print "There are %d predictions" % len(predicted)
     X_labels = 100*[0]
     for i in range(100):
         X_labels[i] = str(i)
     frequencies = [0]*100
+    totalNumTags = 0
+    totalTagsCorrect = 0
     for index, prediction in enumerate(predicted):
         numTags = max(len(Y_train[index]), len(predicted[index]))
+        totalNumTags += numTags
         correctCount = 0
         for i in range(len(predicted[index])):
             if predicted[index][i] in Y_train[index]:
                 correctCount += 1
+        totalTagsCorrect += correctCount
         percentCorrect = float(correctCount) / float(numTags)
         bucketIndex = int(100*percentCorrect)
         if bucketIndex == 100:
             bucketIndex = 99 # put 100% in the last bucket
         frequencies[bucketIndex] += 1
+    printResultsTable(frequencies, len(predicted))
+    print "%.3f percent of tags are correct" % (100.0 * (float(totalTagsCorrect) / float(totalNumTags)))
     pos = np.arange(len(X_labels))
     width = 1.0 # gives histogram aspect to the bar diagram
     ax = plt.axes()
@@ -102,20 +119,27 @@ def plotPrediction(predicted, Y_train):
     plt.show()
     # TODO the histogram of predictions that predicted too many tags
 
-# TODO I ran the classifier on the whole training set for ten minutes
-# until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
-# decode byte 0xe2 in position 45: ordinal not in range(128).
-if __name__ == '__main__':
-    trainingSet = util.loadTrainingSet('xaa')
+def testSVM():
+    print "TESTING SVM"
+    trainingSet = util.loadTrainingSet('xzz')
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
     print "Parsed the training data"
     classifier = multiLabelClassifier(X_train, Y_train)
     testingSet = util.loadTrainingSet('xwi')
     X_test, Y_test = mergeTitlesAndBodies(testingSet)
-    pdb.set_trace()
     print "Parsed the testing data"
     classifier.fit(X_train, Y_train)
     print "Fit the training data"
     predicted = classifier.predict(X_test)
     #printPrediction(X_test, predicted)
     plotPrediction(predicted, Y_test)
+
+def testNaiveBayes():
+    print "TESTING BAYES"
+
+
+# TODO I ran the classifier on the whole training set for ten minutes
+# until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
+# decode byte 0xe2 in position 45: ordinal not in range(128).
+if __name__ == '__main__':
+    testSVM()
