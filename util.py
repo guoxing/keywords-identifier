@@ -4,6 +4,7 @@ import operator
 import os
 import pdb
 import random
+import string
 
 # The data files were generated via split -l 355100 Train.csv
 # That leaves partial CSV entries on the top and bottom of
@@ -45,3 +46,8 @@ def countTags(dataset):
         for tag, count in sorted_tags:
             print >> f, '{0:40} : {1:10} : {2:.2f}%'\
                     .format(tag, count, count / float(total_count) * 100)
+
+def purify(word):
+    punc = set(string.punctuation)
+    word = "".join(ch for ch in word if ch not in punc)
+    return word

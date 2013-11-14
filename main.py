@@ -54,7 +54,11 @@ def mergeTitlesAndBodies(dataset):
     X = []
     Y = []
     for example in dataset:
-        id, title, body, tags = example
+        try:
+            qid, title, body, tags = example
+        except:
+            # some parts might be cut off by splitting data file
+            print qid
         title = stripHTMLTags(title)
         body = stripNewlines(body)
         body = stripHTMLTags(body)
@@ -137,8 +141,23 @@ def tagCountNaiveBayes():
 def multinomialNaiveBayes():
     pass
 
+def createVocabularyForNaiveBayes(X_train):
+    """
+    Create a vocabulary (dictionary) for all the words appeared.
+    Used for multinomial Naive Bayes.
+    """
+    vocab = set()
+    for x in X_train:
+        # trivial word split and purification
+        for word in x.split():
+            word = util.purify(word)
+            vocab.add(word.lower())
+            
+    vocab.remove("")
+    return dict(zip(vocab, range(len(vocab))))
 
-def convertTrainDataForNaiveBayes(X_train, Y_train):
+
+def convertTrainDataForNaiveBayes(X_train, Y_train, vocab):
     """
     Takes in a list a list of questions (X_train) and a
     list of tags per question (Y_train) and outputs
@@ -150,14 +169,16 @@ def convertTrainDataForNaiveBayes(X_train, Y_train):
     @return(x, y)
     """
     rows = []
-    pdb.set_trace()
-    for question in X_train:
-        frequencies = defaultdict(int)
-        for word in question.split(): # TODO strip, lower
-            frequencies[word] += 1
+    for x in X_train:
+        row = []
+        for word in x.split():
+            word = util.purify(word)
+            if word == "":
+                continue
+            row.append(vocab[word.lower()])
+        rows.append(row)
 
-    x # word frequency matrix
-    return (x, y)
+    return (rows, Y_train)
 
 
 def testNaiveBayes(X_train, Y_train, testingSet):
@@ -174,10 +195,16 @@ def testNaiveBayes(X_train, Y_train, testingSet):
 # until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
 # decode byte 0xe2 in position 45: ordinal not in range(128).
 if __name__ == '__main__':
-    trainingSet = util.loadTrainingSet('xzz')
+    trainingSet = util.loadTrainingSet('xaa')
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
+    vocab = createVocabularyForNaiveBayes(X_train)
+    X, Y = convertTrainDataForNaiveBayes(X_train, Y_train, vocab)
+    for i in range(len(X)):
+        print X[i]
+        print Y[i]
+    print vocab
     print "Parsed the training data"
-    testingSet = util.loadTrainingSet('xwi')
-    predicted = testNaiveBayes(X_train, Y_train, testingSet)
-    plotPrediction(predicted, Y_test)
+    #testingSet = util.loadTrainingSet('xwi')
+    #predicted = testNaiveBayes(X_train, Y_train, testingSet)
+    #plotPrediction(predicted, Y_test)
 
