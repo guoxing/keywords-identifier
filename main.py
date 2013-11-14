@@ -10,6 +10,7 @@ import numpy as np
 import pdb
 import re
 import util
+from collections import defaultdict
 
 def multiLabelClassifier(X_train, Y_train, ngram_range=None):
     if ngram_range:
@@ -119,27 +120,64 @@ def plotPrediction(predicted, Y_train):
     plt.show()
     # TODO the histogram of predictions that predicted too many tags
 
-def testSVM():
+def testSVM(X_train, Y_train, testingSet):
     print "TESTING SVM"
-    trainingSet = util.loadTrainingSet('xzz')
-    X_train, Y_train = mergeTitlesAndBodies(trainingSet)
-    print "Parsed the training data"
     classifier = multiLabelClassifier(X_train, Y_train)
-    testingSet = util.loadTrainingSet('xwi')
     X_test, Y_test = mergeTitlesAndBodies(testingSet)
     print "Parsed the testing data"
     classifier.fit(X_train, Y_train)
     print "Fit the training data"
     predicted = classifier.predict(X_test)
     #printPrediction(X_test, predicted)
-    plotPrediction(predicted, Y_test)
+    return predicted
 
-def testNaiveBayes():
+def tagCountNaiveBayes():
+    pass
+
+def multinomialNaiveBayes():
+    pass
+
+
+def convertTrainDataForNaiveBayes(X_train, Y_train):
+    """
+    Takes in a list a list of questions (X_train) and a
+    list of tags per question (Y_train) and outputs
+    a tuple. The first element of the tuple is a matrix
+    which has each training sample as a row,
+    and the words as the columns.
+    The second element of the tuple is a column vector
+    that is the tags per question.
+    @return(x, y)
+    """
+    rows = []
+    pdb.set_trace()
+    for question in X_train:
+        frequencies = defaultdict(int)
+        for word in question.split(): # TODO strip, lower
+            frequencies[word] += 1
+
+    x # word frequency matrix
+    return (x, y)
+
+
+def testNaiveBayes(X_train, Y_train, testingSet):
+    """
+    Our implementation of multinomial Naive Bayes
+    """
     print "TESTING BAYES"
+    numTrainQuestions = len(X_train)
+    x, y = convertTrainDataForNaiveBayes(X_train, Y_train)
+
 
 
 # TODO I ran the classifier on the whole training set for ten minutes
 # until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
 # decode byte 0xe2 in position 45: ordinal not in range(128).
 if __name__ == '__main__':
-    testSVM()
+    trainingSet = util.loadTrainingSet('xzz')
+    X_train, Y_train = mergeTitlesAndBodies(trainingSet)
+    print "Parsed the training data"
+    testingSet = util.loadTrainingSet('xwi')
+    predicted = testNaiveBayes(X_train, Y_train, testingSet)
+    plotPrediction(predicted, Y_test)
+
