@@ -12,7 +12,9 @@ import string
 # the CSV files
 # returns (trainingSet, tags)
 # where tags are all the tags in the training set
-def loadTrainingSet(filename):
+
+# works for both training dataset and testing dataset
+def loadDataSet(filename):
     tags = set()
     with open('train_data/' + filename, 'rb') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
@@ -33,14 +35,14 @@ def computeErrorRate(examples, classifier):
             numErrors += 1
     return 1.0 * numErrors / len(examples)
 
-def countTags(dataset):
+def countTags(dataset, suffix):
     tags_count = collections.defaultdict(lambda: 0)
     for example in dataset:
         tags = example[-1]
         for tag in tags.split():
             tags_count[tag] += 1;
     total_count = sum(tags_count.values());
-    with open("tags_count", 'w') as f:
+    with open("tags_count_" + suffix, 'w') as f:
         print >> f, "total_count: ", total_count
         sorted_tags = sorted(tags_count.items(), key=lambda x:x[1], reverse=1)
         for tag, count in sorted_tags:
@@ -48,6 +50,12 @@ def countTags(dataset):
                     .format(tag, count, count / float(total_count) * 100)
 
 def purify(word):
+    """
+    remove punctuations/digits, lower case word
+    """
     punc = set(string.punctuation)
-    word = "".join(ch for ch in word if ch not in punc)
+    digit = set(string.digits)
+    filt = punc.union(digit)
+    word = "".join(ch for ch in word if ch not in filt)
+    word = word.lower()
     return word

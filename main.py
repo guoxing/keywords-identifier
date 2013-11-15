@@ -54,11 +54,14 @@ def mergeTitlesAndBodies(dataset):
     X = []
     Y = []
     for example in dataset:
-        try:
+        if len(example) == 3:
+            qid, title, body = example
+            tags = ""
+        elif len(example) == 4:
             qid, title, body, tags = example
-        except:
-            # some parts might be cut off by splitting data file
-            print qid
+        else:
+            continue
+
         title = stripHTMLTags(title)
         body = stripNewlines(body)
         body = stripHTMLTags(body)
@@ -138,72 +141,144 @@ def testSVM(X_train, Y_train, testingSet):
 def tagCountNaiveBayes():
     pass
 
-def multinomialNaiveBayes():
-    pass
+def trainNaiveBayes(X_train_nb, Y_train, vocab, tags):
+    phi_k_list = []
+    phi_y_list = []
+    for tag in tags:
+        phi_k, phi_y = trainBaseNaiveBayes(X_train_nb, Y_train, len(vocab), tag)
+        phi_k_list.append(phi_k)
+        phi_y_list.append(phi_y)
+
+    return phi_k_list, phi_y_list
+
+def trainBaseNaiveBayes(X_train_nb, Y_train, num_words, tag):
+    num_questions = len(X_train_nb)
+
+    # phi_k_d: phi_k denominator
+    # phi_k_n: phi_k nominator
+
+    # laplace smoothing
+    phi_k_d = np.ones(2) * num_words
+    phi_k_n = np.ones((2, num_words))
+    
+    phi_y = 0
+    for i in range(num_questions):
+        idx = int(tag in Y_train[i])
+        phi_k_d[idx] += sum(X_train_nb[i])
+        for k in range(num_words):
+            phi_k_n[idx, k] += X_train_nb[i][k]
+        phi_y += idx
+
+    phi_y /= float(num_questions)
+
+    phi_k = np.zeros((2, num_words))
+    for i in range(2):
+        for k in range(num_words):
+            phi_k[i, k] = phi_k_n[i, k] / phi_k_d[i]
+
+    return phi_k, phi_y
+
+def testNaiveBayes(phi_k_list, phi_y_list, X_test_nb, num_words, tags):
+    """
+    return a list of lists. Each row represents a question,
+    and is composed of tags predicted.
+    """
+
+    print "TESTING BAYES"
+    num_questions = len(X_test_nb)
+    for i in range(num_questions):
+        tag_prob = []
+        # compute a probability for each tag
+        for j in range(len(tags)):
+            phi_k = phi_k_list[j]
+            phi_y = phi_y_list[j]
+            log_p_1 = np.log(phi_y)
+            log_p_0 = np.log(1 - phi_y)
+            for k in range(num_words):
+                log_p_1 += np.log(phi_k[1, k]) * X_test_nb[i][k]
+                log_p_0 += np.log(phi_k[0, k]) * X_test_nb[i][k]
+            # need real probability instead of log_p_0 and log_p_1 comparison
+            # use log because product is too small that can result in divide-by-zero
+            tag_prob.append(1 / (1 + np.exp(log_p_0 - log_p_1)))
+
+        tag_prob = sorted(dict(zip(range(len(tag_prob)), tag_prob)).items(),\
+                          key=lambda x:x[1], reverse=True)
+
+    #TODO use classfication/regression to predict k (#tags) for each question 
+
 
 def createVocabularyForNaiveBayes(X_train):
     """
     Create a vocabulary (dictionary) for all the words appeared.
     Used for multinomial Naive Bayes.
+    
+    NOTE: Vocabulary doens't have to be generated this way.
+          Can come up with better vocabulary. (say filter out some words)
     """
     vocab = set()
     for x in X_train:
         # trivial word split and purification
         for word in x.split():
             word = util.purify(word)
-            vocab.add(word.lower())
+            vocab.add(word)
             
     vocab.remove("")
     return dict(zip(vocab, range(len(vocab))))
 
-
-def convertTrainDataForNaiveBayes(X_train, Y_train, vocab):
+def generateTagsForNaiveBayes(Y_train):
     """
-    Takes in a list a list of questions (X_train) and a
-    list of tags per question (Y_train) and outputs
-    a tuple. The first element of the tuple is a matrix
-    which has each training sample as a row,
-    and the words as the columns.
-    The second element of the tuple is a column vector
-    that is the tags per question.
-    @return(x, y)
+    Generate a set of tags from Y_train.
+    """
+    return list(set([tag for l in Y_train for tag in l]))
+
+
+def convertDataForNaiveBayes(X, vocab):
+    """
+    converts X_train to a list of lists. Each row represents a question,
+    and is composed of word frequencies
+
+    Can be used for X_train or X_test
     """
     rows = []
-    for x in X_train:
-        row = []
+    for x in X:
+        row = [0] * len(vocab)
         for word in x.split():
             word = util.purify(word)
             if word == "":
                 continue
-            row.append(vocab[word.lower()])
+            if not vocab.has_key(word):
+                continue
+            row[vocab[word]] += 1
         rows.append(row)
 
-    return (rows, Y_train)
-
-
-def testNaiveBayes(X_train, Y_train, testingSet):
-    """
-    Our implementation of multinomial Naive Bayes
-    """
-    print "TESTING BAYES"
-    numTrainQuestions = len(X_train)
-    x, y = convertTrainDataForNaiveBayes(X_train, Y_train)
-
+    return rows
 
 
 # TODO I ran the classifier on the whole training set for ten minutes
 # until I ran into this error: UnicodeDecodeError: 'ascii' codec can't
 # decode byte 0xe2 in position 45: ordinal not in range(128).
 if __name__ == '__main__':
-    trainingSet = util.loadTrainingSet('xaa')
+    trainingSet = util.loadDataSet('out0')
     X_train, Y_train = mergeTitlesAndBodies(trainingSet)
     vocab = createVocabularyForNaiveBayes(X_train)
-    X, Y = convertTrainDataForNaiveBayes(X_train, Y_train, vocab)
-    for i in range(len(X)):
-        print X[i]
-        print Y[i]
-    print vocab
+    X_train_nb = convertDataForNaiveBayes(X_train, vocab)
+    tags = generateTagsForNaiveBayes(Y_train)
+    phi_k_list, phi_y_list = trainNaiveBayes(X_train_nb, Y_train, vocab, tags)
+
+    # This is HUUUGE amount of work even for 100 questions
+    # might want to reduce the size of vocabulary
+    print "tags count: ", len(tags)
+    print "words count: ", len(vocab)
+    print "questions count: ", len(X_train_nb)
+    print "time complexity: ", len(tags) * len(vocab) * len(X_train_nb)
     print "Parsed the training data"
+
+    testingSet = util.loadDataSet('out1')
+    X_test, Y_test = mergeTitlesAndBodies(testingSet)
+    X_test_nb = convertDataForNaiveBayes(X_test, vocab)
+    testNaiveBayes(phi_k_list, phi_y_list, X_test_nb, len(vocab), tags)
+
+
     #testingSet = util.loadTrainingSet('xwi')
     #predicted = testNaiveBayes(X_train, Y_train, testingSet)
     #plotPrediction(predicted, Y_test)
