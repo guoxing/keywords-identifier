@@ -165,3 +165,7 @@ e.g.
     - are there many other questions that may be the same as this one? It probably has a popular tag.
     - is there emoji? :)
     - are sentences capitalized?
+
+
+
+Note: could consider using a Random Forest algorithm to decrease runtime.
