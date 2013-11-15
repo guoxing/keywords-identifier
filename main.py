@@ -221,7 +221,6 @@ def createVocabularyForNaiveBayes(X_train):
         for word in x.split():
             word = util.purify(word)
             vocab.add(word)
-            
     vocab.remove("")
     return dict(zip(vocab, range(len(vocab))))
 
@@ -239,6 +238,7 @@ def convertDataForNaiveBayes(X, vocab):
 
     Can be used for X_train or X_test
     """
+    # each row contains a dictionary of word frequencies.
     rows = []
     for x in X:
         row = [0] * len(vocab)
@@ -252,6 +252,41 @@ def convertDataForNaiveBayes(X, vocab):
         rows.append(row)
 
     return rows
+
+def numQuestionsWithTag(Y_train, tag):
+    num = 0
+    for y in Y_train:
+        if tag in y:
+            num += 1
+    return num
+
+# guoxing: not sure what you're doing here. I've almost finished the testNaiveBayes.
+# check if that is what you want. If so, please delete this.
+#def testNaiveBayes(X_train, Y_train, testingSet):
+    #"""
+    #Our implementation of multinomial Naive Bayes
+    #"""
+    #print "TESTING BAYES"
+    #numTrainQuestions = len(X_train)
+    #x, y = convertTrainDataForNaiveBayes(X_train, Y_train)
+    ## now train a classifier for each tag
+
+    #numQuestions = len(x)
+
+    ## get the priors per tag, in a dict
+    #priors = {}
+    #for tag in tags:
+        ## the fraction of questions that have the tag out of all questions
+        #priors[tag] = float(numQuestionsWithTag(Y_train, tag)) / float(numQuestions)
+
+    ## find the probability of word x given the tag
+    ## the fraction of words out of all words that are tagged with the tag
+
+
+
+
+    ## when we get a new test question, run each classifier on it
+    ## and capture the top k classifiers
 
 
 # TODO I ran the classifier on the whole training set for ten minutes
