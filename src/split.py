@@ -17,8 +17,8 @@ What does it do:
 """
 num_qs = 50
 num_files = 2
-input_file = "train_data/Train.csv"
-output_prefix = "train_data/out"
+input_file = "../data/Train.csv"
+output_prefix = "../data/out"
 
 with open(input_file, "r") as csv:
     curr_qs = 0

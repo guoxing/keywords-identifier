@@ -5,6 +5,9 @@ import os
 import pdb
 import random
 import string
+import numpy as np
+import re
+from HTMLParser import HTMLParser
 
 # The data files were generated via split -l 355100 Train.csv
 # That leaves partial CSV entries on the top and bottom of
@@ -16,7 +19,7 @@ import string
 # works for both training dataset and testing dataset
 def loadDataSet(filename):
     tags = set()
-    with open('train_data/' + filename, 'rb') as csvfile:
+    with open('../data/' + filename, 'rb') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
             yield row
@@ -59,3 +62,47 @@ def purify(word):
     word = "".join(ch for ch in word if ch not in filt)
     word = word.lower()
     return word
+
+class HTMLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+def stripHTMLTags(html):
+    s = HTMLStripper()
+    s.feed(html)
+    return s.get_data()
+
+def stripNewlines(str):
+    return re.sub(r'\n', '', str)
+
+def mergeTitlesAndBodies(dataset):
+    # each entry in the trainingSet looks like this
+    # ['996004',
+    #  '.NET Dictionary: is only enumerating thread safe?',
+    #  '<p>Is simply enumerating a .NET Dictionary from multiple threads safe? </p>\n\n<p>No modification of the Dictionary takes place at all.</p>\n',
+    #  '.net multithreading dictionary thread-safety'
+    # ]
+    X = []
+    Y = []
+    for example in dataset:
+        if len(example) == 3:
+            qid, title, body = example
+            tags = ""
+        elif len(example) == 4:
+            qid, title, body, tags = example
+        else:
+            continue
+
+        title = stripHTMLTags(title)
+        body = stripNewlines(body)
+        body = stripHTMLTags(body)
+        X.append(title + ' ' + body)
+        Y.append(tags.split())
+    X = np.array(X)
+    Y = np.array(Y)
+    return (X, Y)

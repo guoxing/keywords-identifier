@@ -1,0 +1,857 @@
+"51","Avoid page break in theorem","<p>I have a theorem which is half of it on another page, as I do for you automatically (without <code>\newpage</code>) get full theorem on the next page?</p>
+
+<pre><code>\documentclass[a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{theorem}
+\newtheorem{teo}{Teorema}[chapter]
+
+\begin{document}
+\lipsum[1-5]
+
+\begin{teo}
+\lipsum[1]
+\end{teo}
+
+\end{document}
+</code></pre>
+
+<p><img src=""http://i.stack.imgur.com/Hy6nz.png"" alt=""here""></p>
+
+<p>I have the left and I need right automatically (without <code>\newpage</code>).</p>
+","page-breaking theorems"
+"52","Why unit tests should not use database?","<p>Reading an article <a href=""http://www.javaranch.com/unit-testing.jsp"" rel=""nofollow"">Evil Unit testing</a>, I am not exactly sure WHY the unit tests should never use DB, network or file systems. What if it an network app?</p>
+","unit-testing testing theory"
+"53","How to show that $\lim_{n\to \infty} f_n(x) = 0$.","<p>I hate to admit it, but I don't know how to begin solving this problem: </p>
+
+<p>Let $f\in L^1(\mathbb R)$. Let $\displaystyle f_n(x) = \frac{f(nx)}{n},~n\geqslant 1$. Then $\displaystyle \lim_{n\to \infty} f_n(x) = 0$ for almost every $x\in \mathbb{R}$. </p>
+
+<p>Please this is not a home problem, so hints and full solutions will be very much appreciated.</p>
+","real-analysis analysis measure-theory"
+"54","How to tell emacs to open .h file in C++ mode?","<p>What lines should I add to my _emacs (on Windows) file to have it open .h files in C++ mode?  The default is C mode.</p>
+
+<p>Thanks,</p>
+
+<p>kris</p>
+","emacs"
+"55","How can I modify keyboard shortcuts for Firefox?","<p>I recently started using Firefox as my primary web browser, and I would like to change some of the default keyboard shortcuts, especially the ones used to switch between tabs. Can this be done?</p>
+
+<p>I took a peek through the Firefox directory in ""Application Support"", as well as the application bundle itself, but nothing jumped out. Google searches have also proved fruitless.</p>
+
+<p>Any help is appreciated!</p>
+
+<p><em><strong>Update:</em></strong> I'm running Firefox version 3.6 for Mac OS 10.6.2</p>
+","mac firefox keyboard-shortcuts customization"
+"56","Create 8.3 name for an existing directory","<p>I have a machine that initially had <a href=""http://support.microsoft.com/kb/121007/"">8.3 filename creation disabled</a>.  However, this was causing issues with some legacy software, so it was re-enabled.  I'm wondering if it's possible to go back and ""add"" 8.3 filenames to certain existing directories.  </p>
+
+<p>For example, say I have a directory named ""C:\name with spaces"" and I get the following output when I run ""dir /x"":</p>
+
+<pre><code>C:\&gt;dir /x
+ Volume in drive C has no label.
+ Volume Serial Number is 6873-65B8
+
+ Directory of C:\
+
+04/09/2010  01:57 PM    &lt;DIR&gt;                       name with spaces
+...
+</code></pre>
+
+<p>I'd like to somehow add an 8.3 name for the directory without recreating it, and then get the following:</p>
+
+<pre><code>C:\&gt;dir /x
+ Volume in drive C has no label.
+ Volume Serial Number is 6873-65B8
+
+ Directory of C:\
+
+04/09/2010  01:57 PM    &lt;DIR&gt;          NAMEWI~1     name with spaces
+...
+</code></pre>
+
+<p>I tried the 'rename' command but it didn't do the trick.</p>
+","ntfs filenames"
+"57","<textarea/> tag ""swallows"" html","<p>This is a very strange problem I've been struggling with for a few days. At first I thought it was related to something in our application, but I've stripped it down to the simplest html page and it's still happening. Basically anytime I add a  tag to a page the html after it gets rendered as it's value.  fixes the issue, but I don't understand why. I'm at a loss here, it has to be something really simple that I just don't know.</p>
+
+<p>In the following example the paragraph tags show up as the value of the textarea. </p>
+
+<p>I'm using IE8.</p>
+
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;About&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;textarea/&gt;
+        &lt;p align=""center""&gt;
+            test
+        &lt;/p&gt;
+        &lt;p align=""left""&gt;
+           test
+        &lt;/p&gt;
+
+
+&lt;/body&gt;
+</code></pre>
+
+<p></p>
+","html"
+"58","SSRS limit length of text but keep full words","<p>In my table I have essentially 2 columns (many more but there is an obvious left side and right side). One of the fields, FIELD1, on the left side comes from a LookupSet() and each ID can have two items from FIELD1. Using a join(lookupset(), vbcrlf) I am able to get both values for the ID and put it into one cell in the table. This works but with the vbcrlf, the row height is increased. This causes a problem because there is data on the right side which cannot have additional space between it.</p>
+
+<p>I did a split(join(lookupset())).getValue(0) for the first row and then the row below it for value 1. With some iif statements to check errors etc, this works.</p>
+
+<p>One problem I solved is that the values for FIELD1 can be longer than the width of the cell, but will not take up more than two. I was able to do some substring magic in oracle like:</p>
+
+<pre><code>SELECT ID, SUBSTR(FIELD1, 1, 70) FROM....
+UNION
+SELECT ID, SUBSTR(FIELD1, 70) FROM ...
+</code></pre>
+
+<p>using sorting, I am able to get up to 4 rows of data per ID which I will be able to split the lookupset and get each value into the table.</p>
+
+<p>My last problem, and hopefully someone can help with is that when I ge the substring, It can cut off words and the next row will start with the rest of the word.
+Is there a way, possibly using a regex to make sure to keep words in tact, but also to ensure that the total length returned is &lt; some number of characters? I am happy to abandon any part of the approach i am currently taking if I am off track.</p>
+","oracle reporting-services plsql"
+"59","Play RTSP through VLC in VS2010 on 64bit machine","<p>I am trying to play an RTSP stream on a Win form application on a 64 bit windows machine. I have added the VLC player as a COM component. But when i even try to play a stored video file it does not play. </p>
+
+<pre><code>axVLCPlugin1.addTarget(""C:\\wildlife.wmv"",
+                       null,
+                       AXVLC.VLCPlaylistMode.VLCPlayListReplaceAndGo,
+                       0);
+axVLCPlugin1.play();
+</code></pre>
+
+<p>Am I missing anything?</p>
+","c# visual-studio-2010 plugins rtsp vlc"
+"60","How to get Annotation from TFS using PowerShell?","<p>This document describes how to get the Annotation of a file from TFS: <a href=""http://msdn.microsoft.com/en-us/library/bb385979.aspx"" rel=""nofollow"">http://msdn.microsoft.com/en-us/library/bb385979.aspx</a></p>
+
+<p>I am interested in obtaining the Annotation of a file using PowerShell. Any ideas if this is possible and if so, how one would go about doing it?</p>
+","powershell tfs annotations"
+"61","How can I can read and modify data from XML file?","<p>Please give me the simplest way to read or modify the XML file data?</p>
+
+<p>Currently I tried this but it throws an exception. My current code is:</p>
+
+<pre><code> XmlDocument xml = new XmlDocument();
+ xml.Load(""server.xml"");
+
+ XmlNodeList serverlist = xml.SelectNodes(""//server"");
+ foreach (XmlNode servernodes in serverlist)
+ {
+      string server_address = servernodes.SelectSingleNode(""addresh"").InnerText;
+      string server_uname = servernodes.SelectSingleNode(""username"").InnerText;
+      string server_psw = servernodes.SelectSingleNode(""password"").InnerText;
+ }
+</code></pre>
+
+<p>my XML is below:</p>
+
+<pre><code>&lt;?xml version=""1.0"" ?&gt;
+&lt;server&gt;
+&lt;addresh&gt;localhost&lt;/addresh&gt;
+&lt;username&gt;myuser&lt;/username&gt;
+&lt;password&gt;mypassword&lt;/password&gt;
+&lt;/server&gt;   
+</code></pre>
+
+<p>and Exception is:</p>
+
+<blockquote>
+  <p>NullReference Exception: ""Object reference not set to an instance of an object."" </p>
+</blockquote>
+
+<p>What should i do?</p>
+","c# .net xml exception-handling"
+"62","align the tab control to the right","<p>is there any way that i can align the tab control to the right?
+by default, the tabs are to the left. can i change it to the right or centre.??</p>
+",".net winforms"
+"63","How to get the twitter picture of a user?","<p>I am making a website in which people put in a twitter username. Now I want to load the twitterimage of the name that is put in. I have searched on the internet already but can't find a good easy way to implement this. Do i need to use some fancy twitter api or something? Any simple API's? (it is only for a simple site) or URL's with name as variable in it?</p>
+","twitter twitter-api"
+"64","Assistance with a backup solution.","<p>I am currently needing to create a backup of something on my server. I zip the entire folder and it's about 1.5gb big...it has to be backed up every hour....</p>
+
+<p>Alright so the size of the backup is getting bigger and bigger every day. So I need a way to backup better.</p>
+
+<p>I'd like some suggestions on how to do this.</p>
+
+<p>But what I was thinking was that every 3 days the third day backups are deleted. But one is kept. </p>
+
+<p>This would mean that my backup total is 73.5gb after 3 days of backups. Then I want to keep that third day backup for 1 week. So on the 10th day it is deleted. So about 85gb of total data is backed up.</p>
+
+<p>Ever hour for 2 days and then 1 hour from every day after that 8 times.</p>
+
+<p>I was thinking the easiest way to do it would be move that 1 hour backup from the third day to a new folder and have a separate script for it that is run daily. However I am not sure how I would go about picking out one of them out from the others and how to delete the ones older than 2 days. </p>
+
+<p>I would likely run these scripts as cronjobs and set them to daily.</p>
+
+<p>I use centOS 64bit 5.7, any tips would be great....incremental backups are NOT an option.</p>
+
+<p>Also, is there an easy way to sync my home PC to a website to download the newest file on there at a particular time? I want this for the backups. I've seen some nice php webpages where it makes a simple filemanager to download files from...perhaps something like this?  </p>
+","centos backup shell cron"
+"65","Custom provider exception: No member with username 'xxxxxxx' exists","<p>I'm trying to create a new member on my website using the System.Web.Profile class. I keep getting the exception No member with username 'xxxxxxx' exists. How can I structure the code SO I don't receive this exception?</p>
+
+<p>Thanks in advance.</p>
+
+<pre><code>public static MemberProfile GetUserProfile()
+        {
+            return Create(Membership.GetUser().UserName) as MemberProfile;
+        }
+
+
+//snippet from the OnCreatingUser event
+myproject.Members.MemberProfile mp = myproject.Members.MemberProfile.GetUserProfile(strUserName);
+                        if (mp != null)
+                        {
+                            mp.AuthGuid = newUserGuid;
+                            mp.secretQuestion = ((DropDownList)cuw.CreateUserStep.ContentTemplateContainer.FindControl(""Question"")).Text;
+                            mp.secretAnswer = ((TextBox)cuw.CreateUserStep.ContentTemplateContainer.FindControl(""Answer"")).Text;
+                            mp.isLocked = true;
+                            mp.isApproved = false;
+                            mp.Save();
+
+                        Roles.AddUserToRole(strUserName, ""Retail"");
+</code></pre>
+","asp.net asp.net-profiles"
+"66","What do the parentheses mean when you're declaring/calling a property?","<p><strong>Example 1</strong>:</p>
+
+<pre><code>function a(){
+  return ""ok"";
+}
+
+function b(){
+  this.c = a;
+}
+
+var d = new b();
+alert(d.c()); // Result ""ok"".
+</code></pre>
+
+<p><strong>Example 2</strong>:</p>
+
+<pre><code>function b(){
+    this.c = a();
+}
+
+var d = new b();
+alert(d.c); // Result ""ok"".
+</code></pre>
+
+<p>What do the parentheses mean in this case?</p>
+","javascript"
+"67","Remove left padding for a WPF ListBoxItem with GroupStyle defined for its ListBox","<p>I have a WPF ListBox with several headings. I acheived this by having a GroupStyle in which I define how each header will look:</p>
+
+<pre><code>&lt;ListBox DataContext=""{StaticResource MyGroups}"" ItemsSource=""{Binding}""&gt;
+    &lt;ListBox.GroupStyle&gt;
+        &lt;GroupStyle&gt;
+            &lt;GroupStyle.HeaderTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;!-- my header stuff --&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/GroupStyle.HeaderTemplate&gt;
+        &lt;/GroupStyle&gt;
+    &lt;/ListBox.GroupStyle&gt;
+
+    &lt;!-- ListBox.ItemTemplate.. not shown --&gt;
+&lt;/ListBox&gt;
+</code></pre>
+
+<p>Somehow, this causes the individual ListBoxItems to be slightly ""indented"" under their respective headers (Removing the GroupStyle removes the indentation, along with all the headers though).</p>
+
+<p>I sort of see why they would want them indented by default, but is there anyway to remove that small left padding? I have tried to define a style for ListBoxItem to set the Padding = 0, but the outcome is the same.</p>
+","c# .net wpf listbox"
+"68","How to force the caller of the class to catch exception?","<p>Inside my class I have a private variable that my methods use which has an exception that has to be caught.</p>
+
+<p>How can I force the callee to handle the exception and not have me do it in my code?</p>
+
+<pre><code>public class SomeLibImpl extends SomeLib {
+
+   private Mongo _mongo = new Mongo();
+
+}
+</code></pre>
+
+<p>Where Mongo throws a <code>UnknownHostException</code> that I have to handle.</p>
+
+<p>If this is something I shouldn't be doing and there is a better way please tell me, but I also want to know how to force the callee of the class to handle the exception.</p>
+
+<p>I thought I would do this:</p>
+
+<pre><code>public class SomeLibImpl extends SomeLib throws UnknownHostException {
+  // ..
+}
+</code></pre>
+
+<p>But that doesn't compile.</p>
+","java exception-handling"
+"69","Entity Framework model-first design not won't let you edit the table mappings?","<p>If we've been using an Entity Framework 4 model for some time, and we eventually want to switch the underlying database to a different vendor's product (say, from SQL Server to MySQL), is it simple to adjust the table and column mappings in the entity model without needing to update any of the entity class code?</p>
+
+<p>We're trying to design code that is as database agnostic as possible, so I'd like to know in advance how much trouble we're in for if we ever switch our databases around.  Ideally, we'd like to not have to touch our applications that use our entity classes.  I can't seem to find any way in the entity designer or XML editor to adjust the underlying database column names without it giving me an error.</p>
+
+<p>(I can, however, edit the entity's property names in the designer while leaving the database column names alone, but that's the opposite of what I need.)</p>
+
+<p>Thanks!</p>
+","entity-framework"
+"70","How to change the order of options in ""run as"" menu in eclipse?","<p>I mainly develop for Android in Eclipse. I used to run my app in with shortcut ""CTRL+F11"" which was the same as clicking ""run as android application"" in menu.
+Then i installed some eclipse plugins for webservices and now when i press ""CTRL+F11"", it calls ""run on server"" because this is the first option in ""run as"" menu. </p>
+
+<p>How can i change this so the default option for run as would be ""run as android application""?</p>
+","eclipse keyboard-shortcuts run"
+"71","MVC 3 Wizard via JavaScript unsafe?","<p>I stepped over the following tutorial:
+<a href=""http://afana.me/post/create-wizard-in-aspnet-mvc-3.aspx"" rel=""nofollow"">http://afana.me/post/create-wizard-in-aspnet-mvc-3.aspx</a></p>
+
+<p>Since it looks pretty nice, I'm asking myself if making the complete wizard in JavaScript just like that is a good/safe idea?</p>
+","javascript asp.net-mvc-3 security mvc"
+"72","Silverlight Isolated Storage Best Practices?","<p>I'm just starting to really get into Silverlight development and I have a certain use case where I need to store a couple collections of objects or strings for a specific user's ""sessions"".
+I want this to be user specific and accessible throughout the Silverlight application.</p>
+
+<p>My first thought was to add static properties on the App.xaml.</p>
+
+<p>On user login, I'm retrieving lists of objects that this user has access to from an API call, then storing those in the static properties of the App.xaml.</p>
+
+<p>Then I can access those properties throughout the xaml pages.</p>
+
+<p>My question is, is this truly user specific?
+Is this best practice?
+Should I use isolated storage in this case instead?
+What are the limitations of isolated storage?
+Isolated storage is, by nature, user specific, correct?</p>
+
+<p>Thanks</p>
+","c# silverlight session isolatedstorage"
+"73","jQuery Mobile Clickhander won't work for an instance of a custom object","<p>I am setting a click handler for an anchor tag in jQuery mobile with via reference to the handler function inside the anchor tag (I need to do it this way for reasons that are cumbersome to get into). This approach works fine if I use a string or an integer as the function parameter but if I try to input an instance of an object (as illustrated below) it doesn't work. Any advice on what I may be doing wrong would be greatly appreciated.</p>
+
+<p>
+</p>
+
+<pre><code>&lt;head&gt;
+    &lt;meta name=""viewport"" content=""width=device-width, initial-scale=1""&gt;
+    &lt;meta http-equiv=""Content-Type"" content=""text/html; charset=UTF-8"" /&gt;
+    &lt;script type=""text/javascript"" src=""http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js""&gt;&lt;/script&gt;
+    &lt;link rel=""stylesheet"" href=""http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css""
+    /&gt;
+    &lt;script src=""http://code.jquery.com/jquery-1.7.1.min.js""&gt;&lt;/script&gt;
+    &lt;script src=""http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js""&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;script&gt;
+        $(document).ready(function () {
+
+            function testObject() {
+                this.param1;
+            }
+
+            function maketestObject(param1) {
+                var result = new testObject();
+                result.param1 = param1;
+                return result;
+            }
+
+            var i = 0;
+            var html;
+            for (i = 0; i &lt;= 5; i = i + 1) {
+                var testInstance = maketestObject(""test param"");
+                html += '&lt;li&gt;&lt;a href=""#"" data-theme=""a"" onclick=""clickHandler(' + testInstance + '); return false;"" rel=""external"" data-role=""button""&gt;click test1&lt;/a&gt;&lt;/li&gt;';
+            }
+
+            $(""#testList"").append(html);
+            $(""#testList"").listview(""refresh"");
+
+        });
+
+        function clickHandler(e) {
+            alert(e);
+        }
+    &lt;/script&gt;
+    &lt;div data-role=""page"" class=""type-interior""&gt;
+        &lt;div id=""main"" data-role=""content""&gt;
+            &lt;ul id=""testList"" data-role=""listview""&gt;&lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p></p>
+","jquery-mobile event-handling click anchor"
+"74","comparing temporal sequences","<p>I'm trying to wrap my head around this task and wondering if there is a standard way of doing this or some libraries that would be useful.</p>
+
+<p>Certain events are tracked and timed at several data sources S1 ... SN. The recorded information is the event type and timestamp. There may be several events of the same type sequentially or they may be intermittent. There could be ""missing"" events - i.e. when one of the sources misses it, and, vice versa, when a source introduces a ""false positive"". There is typically a time difference between observations of the same event at different sources. This time difference has a constant component due to physical location of the sources but may also have a varying component introduced by network latency and other factors.</p>
+
+<p>I need to find an algorithm that would find the optimal maximum time interval that should be used to group the observations at all sources in a single ""observed event"" and allow detection of the missing events and false positives.</p>
+
+<p>I am wondering if the solution is really somewhere in the statistics field rather than algoritghms. Any input would be much appreciated.</p>
+","temporal-database temporal temporal-difference"
+"75","session object returning null","<p>i have created a login page for my project ""student information system"" which contain text fields username,userid and password.i tried to store the value of username and userid in session object and use it in another page but it is returning null value.</p>
+","java jsp session-state"
+"76","Reference a valid Facebook user profile","<p>The site is set to WordPress 3.4.1, annexed widget Facebook for WordPress</p>
+
+<p>Later I changed the name to the Facebook user profile, and now get an error that I need to reference a valid Facebook user profile.</p>
+
+<p>What changes do I have to make so that data-href will be the correct (new) Facebook user profile? Can you guide me? </p>
+","facebook wordpress"
+"77","Why can't I observe meta+i/meta+b in Safari?","<p>Please refer to this: <a href=""http://jsfiddle.net/r3ukS/1/"" rel=""nofollow"">jsfiddle</a></p>
+
+<p>As far as I can tell, this only applies to Safari on a Mac, so if you're using something other than that feel free to try it, but you probably won't notice any issue.</p>
+
+<p>In an application I'm creating I need to observe command/meta+b &amp; command/meta+i so I can make text either bold or italic. It works fine in chrome, but I can't observe those key combinations in Safari. </p>
+
+<p>Is this a bug with safari? Am I overlooking something? Any help would be appreciated. Thanks!</p>
+
+<p><strong>EDIT:</strong></p>
+
+<p>If the JSfiddle link doesn't give you the results I'm describing, then copy and paste the code below into a fresh jsfiddle and try the same experiment. Doing it this way ensures for me that the observe will not work. Regardless of the way it's applied in my application it refuses to observe the keystrokes.</p>
+
+<pre><code>document.observe('keydown', function(e) {     
+     if(e.metaKey) alert('hi');
+});​
+</code></pre>
+","javascript javascript-events prototypejs"
+"78","Creating variables with index (using counters)","<p>Is there a way to add an index to a command? For example:</p>
+
+<pre><code>\newcounter{count}
+\loop&lt;condition&gt;
+  \def\var\Roman{count}{some data}
+\repeat
+</code></pre>
+
+<p>The <code>\var\Roman{count}</code> should become the variable <code>\varI</code>, <code>\varII</code>, <code>\varIII</code> and so on.</p>
+
+<p>Background: I need to get some data from external files and store it into variables (which I will later use to create a document). Normally every <code>\varI</code> should be the same as every <code>\varII</code>, but I need to check whether it really is the case or not. If not I should return a warning or error.</p>
+
+<hr>
+
+<p>Solution for the first problem is in the comments, but I have a second problem.</p>
+
+<p>Suppose I wrote this:</p>
+
+<pre><code>\newcommand\addindex[3]{  % #1 as name of var, #2 as index and #3 as content
+  \expandafter\def\csname #1\Roman{#2}\endcsname{#3}  % thanks to egreg
+}
+
+\newcounter{count}
+\loop\unless\ifnum\value{count}=5
+  \stepcounter{count}
+  \addindex{var}{count}{\arabic{count}}
+\repeat
+</code></pre>
+
+<p>All <code>\var&lt;index&gt;</code> have now as value 5, because they are defined as <code>\arabic{count}</code>, and not their value at the moment. Adding <code>\expandafter</code> before <code>\arabic{count}</code> does not seem to work for some reason...</p>
+","counters loops"
+"79","Mercurial hooks: how to find the current directory on commit","<p>I am trying to create a hook to Mercurial SCM (hg) using C# .NET, to launch a custom C# application on commit or pre-commit.</p>
+
+<p>As a proof-of-concept prototype, I added a location of my custom .exe to the Mercurial.ini file's [hooks] section for pre-commit, and another .exe for commit.
+Those .exe apps open on pre-commit and commit, as expected.</p>
+
+<p>However, those executables are only stubs so far.
+To make them do what I need, they have to ""know"" the current directory where the commit is about to occur (or has occurred).
+Mercurial.ini is located in my user profile directory on Windows.
+For example, when I do a commit from an Hg repository located in C:\MyProjects\TestProject, the executables need to know that the work is being done in C:\MyProjects\TestProject.</p>
+
+<p>How can I find out programmatically at runtime from a ""hooked"" executable where the Mercurial command is being executed on the local machine?</p>
+","version-control mercurial"
+"80","What's a good two-way encryption library implemented in Python?","<p>The authentication system for an application we're using right now uses a two-way hash that's basically little more than a glorified caesar cypher.  Without going into too much detail about what's going on with it, I'd like to replace it with a more secure encryption algorithm (and it needs to be done server-side).  Unfortunately, it needs to be two-way and the algorithms in hashlib are all one-way.</p>
+
+<p>What are some good encryption libraries that will include algorithms for this kind of thing?</p>
+","python encryption"
+"81","Is there a way to create a CMakelist.txt from a visual studio (c++) solution?","<p>I know that is possible to create a visual studio solution from a cmake project. But I wonder if there is a program that will do it the other way around (aka create a CMakelist.txt from a visual studio solution).</p>
+","visual-studio cmake"
+"82","Securing an Ubuntu Lucid web server","<p>I have an Ubuntu Lucid server that is public facing. I haven't really configured much on it except installing SSH (sshd) and Apache (httpd); I don't have a firewall or anything. Are there some common rules that I should follow to secure my system? I've been following <a href=""http://www.thegeekstuff.com/2011/03/apache-hardening/"" rel=""nofollow"">this article</a> on securing my Apache.</p>
+","linux ubuntu security ubuntu-10.04 internet-security"
+"83","tomcat 7.0.27 not starting","<p>I just got tomcat 7.0.27. I have kept the time to start tomcat 45sec. Also it was running fine with older version on tomcat. 
+but running it I get the following error :</p>
+
+<pre><code>SEVERE: A child container failed during start
+java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/VotingApp]]
+    at java.util.concurrent.FutureTask$Sync.innerGet(FutureTask.java:222)
+    at java.util.concurrent.FutureTask.get(FutureTask.java:83)
+    at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:1128)
+    at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:782)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1566)
+    at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1556)
+    at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+    at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+    at java.lang.Thread.run(Thread.java:680)
+Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/VotingApp]]
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:154)
+    ... 7 more
+Caused by: java.lang.NoClassDefFoundError: HttpServletRequest
+    at java.lang.Class.getDeclaredMethods0(Native Method)
+    at java.lang.Class.privateGetDeclaredMethods(Class.java:2427)
+    at java.lang.Class.getDeclaredMethods(Class.java:1791)
+    at org.apache.catalina.startup.WebAnnotationSet.getDeclaredMethods(WebAnnotationSet.java:470)
+    at org.apache.catalina.startup.WebAnnotationSet.loadMethodsAnnotation(WebAnnotationSet.java:275)
+    at org.apache.catalina.startup.WebAnnotationSet.loadApplicationServletAnnotations(WebAnnotationSet.java:137)
+    at org.apache.catalina.startup.WebAnnotationSet.loadApplicationAnnotations(WebAnnotationSet.java:66)
+    at org.apache.catalina.startup.ContextConfig.applicationAnnotationsConfig(ContextConfig.java:381)
+    at org.apache.catalina.startup.ContextConfig.configureStart(ContextConfig.java:858)
+    at org.apache.catalina.startup.ContextConfig.lifecycleEvent(ContextConfig.java:345)
+    at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:119)
+    at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)
+    at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5161)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    ... 7 more
+Caused by: java.lang.ClassNotFoundException: HttpServletRequest
+    at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1711)
+    at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1556)
+    ... 21 more
+May 11, 2012 10:09:21 AM org.apache.catalina.core.ContainerBase startInternal
+SEVERE: A child container failed during start
+java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost]]
+    at java.util.concurrent.FutureTask$Sync.innerGet(FutureTask.java:222)
+    at java.util.concurrent.FutureTask.get(FutureTask.java:83)
+    at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:1128)
+    at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:302)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    at org.apache.catalina.core.StandardService.startInternal(StandardService.java:443)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:732)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    at org.apache.catalina.startup.Catalina.start(Catalina.java:675)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+    at java.lang.reflect.Method.invoke(Method.java:597)
+    at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:322)
+    at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:450)
+Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost]]
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:154)
+    at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1566)
+    at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1556)
+    at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+    at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+    at java.lang.Thread.run(Thread.java:680)
+Caused by: org.apache.catalina.LifecycleException: A child container failed during start
+    at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:1136)
+    at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:782)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    ... 7 more
+May 11, 2012 10:09:21 AM org.apache.catalina.startup.Catalina start
+SEVERE: Catalina.start: 
+org.apache.catalina.LifecycleException: Failed to start component [StandardServer[8005]]
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:154)
+    at org.apache.catalina.startup.Catalina.start(Catalina.java:675)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+    at java.lang.reflect.Method.invoke(Method.java:597)
+    at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:322)
+    at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:450)
+Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardService[Catalina]]
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:154)
+    at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:732)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    ... 7 more
+Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina]]
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:154)
+    at org.apache.catalina.core.StandardService.startInternal(StandardService.java:443)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    ... 9 more
+Caused by: org.apache.catalina.LifecycleException: A child container failed during start
+    at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:1136)
+    at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:302)
+    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+    ... 11 more
+May 11, 2012 10:09:21 AM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 561 ms
+</code></pre>
+
+<p>How do I resolve the error. I have looked into some similar posts but did not find it useful.</p>
+","servlets tomcat7"
+"84","Ruby Savon compared to Java Axis","<p>I'm trying to use the Yodlee soap APIs. They give examples with Apache Axis
+Any perspectives on using Ruby and Savon versus Java and Axis? </p>
+
+<p>With Ruby/Savon, it seems that the best thing to do is to skip using the WSDL files and generate the requests based on examples from the Java/Axis program. I tried using the WSDL feature of Savon, but I could not get it to work with the many embedded types and namespaces in the very complex WSDLs.</p>
+
+<p>Looking at the Java/Axis code, there's a huge amount of generated code that isolates the Java developer from knowing about the XML. Has anybody ever tried to replicate Axis in the Ruby world?</p>
+
+<p>Thanks. </p>
+","java ruby wsdl axis2 savon"
+"85","Linux Bash: Setting iptables rules to allow both active and passive FTP","<p>I have a PC on which I have a FTP server installed. I want to set the iptables rules to allow both active and passive FTP. I've tried the following code that people report is working, but it seems to block all traffic for me (pages won't load anymore etc)</p>
+
+<pre><code>#!/bin/bash
+
+IPT=/sbin/iptables
+$IPT -F
+$IPT -X
+$IPT -t nat -F
+$IPT -t nat -X
+$IPT -t mangle -F
+$IPT -t mangle -X
+/sbin/modprobe ip_conntrack
+/sbin/modprobe ip_conntrack_ftp
+
+# Setting default filter policy
+$IPT -P INPUT DROP
+$IPT -P OUTPUT ACCEPT
+
+# Allow FTP connections @ port 21
+$IPT -A INPUT  -p tcp --sport 21 -m state --state ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp --dport 21 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+# Allow Active FTP Connections
+$IPT -A INPUT -p tcp --sport 20 -m state --state ESTABLISHED,RELATED -j ACCEPT
+$IPT -A OUTPUT -p tcp --dport 20 -m state --state ESTABLISHED -j ACCEPT
+
+# Allow Passive FTP Connections
+$IPT -A INPUT -p tcp --sport 1024: --dport 1024: -m state --state ESTABLISHED,RELATED -j ACCEPT
+$IPT -A OUTPUT -p tcp --sport 1024: --dport 1024:  -m state --state ESTABLISHED,RELATED -j ACCEPT
+</code></pre>
+","linux bash ftp iptables"
+"86","Enumerate All Installed Applications on OS X","<h1>Basic problem</h1>
+
+<p>I'm looking for a solution to enumerate all applications installed on a (Mac) OS X system, i.e. all application bundles registered with <a href=""https://developer.apple.com/library/mac/#documentation/Carbon/Reference/LaunchServicesReference/Reference/reference.html"" rel=""nofollow"">LaunchServices</a>.</p>
+
+<h1>Simple approach that did not work</h1>
+
+<p>(Please note: <code>lsregister</code> can be found under <code>/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister</code>).</p>
+
+<p>Currently I am using the output of <code>lsregister -dump | grep -E '^.*[ \\t]*path:[ \\t]+(\/.*)$' | grep -Eo '\/.*'</code>, which has a few problems:</p>
+
+<ul>
+<li><code>.app</code> bundles with newlines (<code>\n</code>, which is valid on UNIX) are not handled correctly (This issue would be fixable by writing a proper parser)</li>
+<li><p><code>lsregister</code> doesn't handle correctly weird filename (e.g. containing the <a href=""http://en.wikipedia.org/wiki/Right-to-left_mark"" rel=""nofollow"">RTL mark</a>). <code>lsregister</code> just seems to ignore files with the RTL mark in their name. 
+If you want to, you can create a file with RTL in its name by running the following command.</p>
+
+<pre><code>python -c 'import shutil; shutil.copytree(u""/Applications/TextEdit.app"", u""/Applications/ThisIsAWeird\u202EApp.app"")'
+</code></pre>
+
+<p>After doing this, <code>lsregister -dump | grep ThisIsAWeird</code> will <em>not</em> reveal it. But when you right click on a text file and go to ""Open With"" you'll that LaunchServices and Finder still support that file.
+<img src=""http://i.stack.imgur.com/c40Jq.png"" alt=""see yourself""></p></li>
+</ul>
+
+<p>Simply enumerating all files in <code>/Applications</code> and other directories does not work because LaunchServices is aware of application bundles in arbitrary folders and I also need these apps.</p>
+
+<h1>Other approch that I didn't get to work</h1>
+
+<p>Apparently, there's a private API function called <code>_LSFindApplications</code> which does exactly what I need to do but I can't get it to work and didn't find any inofficial documentation on the internet. (proof it exists: <code>nm /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/LaunchServices  | grep __LSFindApplications$</code>)</p>
+","osx application osx-mountain-lion launch-services"
+"87","""Scrambled"" webkit scrollbar (trying to reproduce Google+'s scrollbar)","<p>I'm trying to reproduce google+'s scrollbar on my site. For reasons I can't figure out sometimes this scrollbar has a scrambled appearance. By scrambled, I mean the scrollbar is multi-colored, has a black line spanning it, and the <code>scrollbar-thumb</code> is not visible. Here's a screenshot to show you what i mean:  </p>
+
+<p><img src=""http://i.stack.imgur.com/ooHag.png"" alt=""enter image description here""></p>
+
+<p>Here's a <a href=""http://jsfiddle.net/trpeters1/XkGuu/31/"" rel=""nofollow"">jsfiddle</a> where unfortunately, the scrollbar looks normal so I haven't been able to reproduce my problem. </p>
+
+<p>I'm using <a href=""http://twitter.github.com/bootstrap/"" rel=""nofollow"">Twitter Bootstrap</a> if that is helpful for thinking about how my existing CSS could be screwing this up.</p>
+","css css3 webkit scrollbar pseudo-class"
+"88","How to create a block transition in jQuery","<p>What is the best way to create a block transition in jQuery? Are there any plugins, who provide this transition (only the transition, I don't want a image gallery, which has such a transition!)?</p>
+
+<p>I am looking for something like <a href=""http://mitya.co.uk/scripts/Blockster-transition-effect-122"" rel=""nofollow"">http://mitya.co.uk/scripts/Blockster-transition-effect-122</a> or the diagonal expand block transition at <a href=""http://codecanyon.net/item/jquery-banner-rotator-slideshow/full_screen_preview/109046"" rel=""nofollow"">http://codecanyon.net/item/jquery-banner-rotator-slideshow/full_screen_preview/109046</a></p>
+
+<p>Problem with the first link is, that it is very slow, when using a bit more blocks. I can't figure out how the transition has been created on the second link.</p>
+","javascript jquery transition effect"
+"89","ssh client returning error ""Couldn't apply options""","<p>I am getting ""Couldn't apply options"" while connecting to a SSH server.</p>
+
+<p>When I checked the source code of the library I found the following code in the client.c
+which is returning the error.</p>
+
+<pre><code>ret = ssh_options_apply(session);
+
+if (ret &lt; 0) {
+    ssh_set_error(session, SSH_FATAL, ""Couldn't apply options"");
+    leave_function();
+    return SSH_ERROR;
+}
+</code></pre>
+
+<p>Can anyone please tell me what are the possibilities that could result into this error ?</p>
+","libssh"
+"90","How can I unit test my controller to make sure Windsor can resolve dependencies when using PerWebRequestLifestyle","<p>I have the following unit test in my application:</p>
+
+<pre><code>    [TestMethod]
+    public void Windsor_Can_Resolve_HomeController_Dependencies()
+    {
+        // Setup
+        WindsorContainer container = new WindsorContainer();
+        container.Install(FromAssembly.Containing&lt;HomeController&gt;());
+
+        // Act
+        container.Kernel.Resolve(typeof(HomeController));
+    }
+</code></pre>
+
+<p>The point of this is to make sure I don't have any windsor configuration issues that I won't realize until I access an action on that controller.  The problem is that all my object registrations are registered as <code>PerWebRequestLifestyle</code> so I don't get issues with my Entity Framwork Data Context being shared across web requests (which causes errors when multiple actions are run).</p>
+
+<p>However, whenever I run this unit test I get the following exception:</p>
+
+<p>System.InvalidOperationException: HttpContext.Current is null. PerWebRequestLifestyle can only be used in ASP.Net</p>
+
+<p>How can I go about testing this scenario without changing the lifestyle of my object registration commands?</p>
+","c# unit-testing castle-windsor"
+"91","F# working with while loop","<p>I have a datareader and i want to return collection of rows from it, after reading books for like a day i am not able to find out best way to do it in f#. I can do it normal C# way in F# but that is not why i am using f#</p>
+
+<p>Here is what i am trying to achieve</p>
+
+<pre><code>let values =
+    while reader.Read() do
+        yield reader.GetString(0), reader.GetInt64(1)
+</code></pre>
+
+<p>Above is how i am trying to do</p>
+
+<ul>
+<li>all values get collected into values, which could be dictinary or tuples or any collection</li>
+<li>yield can't be used in while loop but that is what i am trying to do</li>
+</ul>
+
+<p>What could be the best way to achieve this</p>
+","f#"
+"92","showing newly added rows after submit if error comes","<p>I am using this Javascript to add rows in table <code>preq</code> which already contains 4 rows. The problem is that when I add rows using this Javascript  rows are added properly on form, but if some error comes on form, and if form is reloaded than this newly added rows are not visible and I also want entered text within rows to be visible
+<img src=""http://i.stack.imgur.com/9gXjt.png"" alt=""enter image description here""></p>
+
+<p><code>javascript</code></p>
+
+<pre><code>&lt;script type=""text/javascript""&gt;
+            var counter = 5;
+            function addrow()
+            {
+                if (counter &gt; 10)
+                {
+                    alert(""Only 10 Kind of Works are allowed"");
+                return false;
+                }
+            $('#preq &gt; tbody:last').append('&lt;tr&gt;&lt;td&gt;&lt;input title=""Enter Kind Of work"" readonly=""readonly"" onclick=""if(this.value!=\'\'){this.value=\'\';opendrop();}else{opendrop();}"" id=""other_work' + counter + '"" name=""other_work' + counter + '"" type=""text"" size=""30"" onclick=""opendrop()"" &lt;?php if (isset($errors)) { echo 'value=""'.htmlentities(@$_POST['other_work' + counter + '']).'""'; } ?&gt;&gt;&lt;/td&gt;&lt;td&gt;&lt;input name=""client_name' + counter + '"" type=""text"" id=""client_name' + counter + '"" size=""40""/&gt;&lt;/td&gt;&lt;td&gt;&lt;input name=""firm_name' + counter + '"" type=""text"" id=""firm_name' + counter + '"" size=""40""/&gt;&lt;/td&gt;&lt;/tr&gt;');
+                counter++;
+            }
+            &lt;/script&gt;
+</code></pre>
+
+<p>html code           </p>
+
+<pre><code>&lt;table align=""left"" id=""preq"" style=""display: none;""&gt;
+                &lt;tr&gt;
+                                &lt;/tr&gt;
+                                    &lt;tr&gt;
+                                    &lt;th align=""left""&gt;&lt;label id=""Label1""&gt; Kind of Work &lt;/label&gt;&lt;/th&gt;
+                                    &lt;th align=""left""&gt;&lt;label id=""Label1""&gt; Name Of The Client &lt;/label&gt;&lt;/th&gt;
+                                    &lt;th align=""left""&gt;&lt;label id=""Label1""&gt;Name of Firm / Organisation &lt;/label&gt;&lt;/th&gt;
+                                    &lt;/tr&gt;
+            &lt;tbody&gt;
+
+            &lt;!--4 rows alredy present here--&gt;
+            &lt;/tbody&gt;
+    &lt;tr&gt;&lt;td colspan=""3""&gt;&lt;input type=""button"" class=""button"" value=""Add Kind of Work"" onclick=""addrow()""/&gt;&lt;/td&gt;&lt;/tr&gt;
+
+            &lt;/table&gt;
+</code></pre>
+","php javascript html"
+"93","jQuery Masonry access internal method var","<p>Any advice how to access an internal method var of jQuery Masony?
+I'm looking to console.log the <code>containerSize</code> property inside the <code>layout</code> method:</p>
+
+<p>line 177 > <a href=""https://github.com/desandro/masonry/blob/master/jquery.masonry.js"" rel=""nofollow"">query.masonry.js</a></p>
+
+<p>I need to retrieve the <code>containerSize</code> after masonry init:</p>
+
+<pre><code>$('#container').masonry({
+  itemSelector: '.box'
+});
+
+console.log(""here i need to retrieve the containerSize"");
+</code></pre>
+","jquery"
+"94","Java 2Dimensional Boolean Array Values","<p>I'm having a problem with my 2 dimensional boolean array. (or it may be with the logic of printing out the values). I set all of the values in the array to false in the beginning, and then later i print out the values to the screen. When i print them out, they all come up as true. </p>
+
+<pre><code>x=20;
+y=10;
+boolArray = new boolean[x][y];
+
+for(int c=0;c&lt;x;c++)
+{
+  for(int i=0;i&lt;y;i++)
+  {
+    boolArray[c][i] = false;
+  }
+}
+
+System.out.println(""2D Boolean Array:"");
+
+for(int a = 0; a &lt; boolArray.length; a++)
+{
+  for(int b = 0; b &lt; boolArray[a].length; b++)
+  {
+    if(boolArray[a][b] = true)
+    {
+      System.out.print(""T"");
+    }
+    else if(boolArray[a][b] = false)
+    {
+      System.out.print(""F"");
+    }
+  }
+}
+</code></pre>
+","java multidimensional-array boolean"
+"95","failed to open stream : Is a directory in","<p>I am getting the following warnings on trying on move an uploaded file from the temp folder to the desired one using php</p>
+
+<p>Warning: move_uploaded_file(test/) [function.move-uploaded-file]: failed to open stream: Is a directory in /home/..../filename.php on line 69</p>
+
+<p>Warning: move_uploaded_file() [function.move-uploaded-file]: Unable to move '/tmp/phpKrCpQw' to 'test/' in /home/..../filename.php on line 69</p>
+
+<p>following are line nos 67 and 69 that are giving the error :</p>
+
+<pre><code>$destination = ""test/"". $name;
+
+$answer = move_uploaded_file($_FILES['user_file']['tmp_name'],$destination);
+</code></pre>
+","php file-upload warnings"
+"96","why *foo ++= *++foo may be undefined?","<p>it should set the current character to next character. For example: </p>
+
+<pre><code>while( *foo ) { 
+ if(baa(*foo)) *foo++ = *++foo;
+  foo++;
+}
+</code></pre>
+
+<p>But I get the following errors:</p>
+
+<pre><code>error: operation on ‘foo’ may be undefined [-Werror=sequence-point]
+cc1: all warnings being treated as errors
+</code></pre>
+
+<p>Can anyone explain why that? that isn't valid C syntax?</p>
+","c pointers gcc"
+"97","Performance when using document() repeatedly in xslt","<p>Is it acceptable to call the same document throughout an xslt-file like this : </p>
+
+<pre><code>&lt;xsl:value-of select=""document('doc.xml')/root/bar/foo1"" /&gt;
+&lt;xsl:value-of select=""document('doc.xml')/root/bar/foo2"" /&gt;
+&lt;xsl:value-of select=""document('doc.xml')/root/bar/foo3"" /&gt;
+</code></pre>
+
+<p>...? </p>
+
+<p>I can imagine that caching avoids producing overhead for reading the file time after time. </p>
+
+<p>Or should I store the doc.xm in a variable and  use that variable to query?  </p>
+
+<p>In this case I will have to use some sort of library like xsle since I am using xslt1.  </p>
+
+<p>Or is there any other solution?  </p>
+
+<p>Note : Some parts of the XPath should be dynamic like : </p>
+
+<pre><code>&lt;xsl:value-of select=""document('doc.xml')/root/*[name()=$lang]/foo3"" /&gt;
+</code></pre>
+","xslt"
+"98","How can I find out if my GNU C library is thread-safe?","<p>I'm currently <a href=""http://www.mathworks.com/matlabcentral/answers/35754-segmentation-faults-when-running-mex-files-in-parallel"" rel=""nofollow"">receiving weird segmentation violations when runnning a MATLAB MEX file in paralle</a>l. </p>
+
+<p>After a lot of debugging, I'm 99% sure that the segmentation violation has nothing to do with the MEX file itself but with the fact that I'm running it in parallel.</p>
+
+<p>One possible reason for the segmentation violations that was suggested is that the C library functions ""malloc"" and ""free"" may not be thread-safe. Is this really a possibility? And is there any way that I can make sure? </p>
+
+<p>I compiled the MEX file using the ""GNU C 2.14.90 development"" C Library - so I guess I'm looking for a website where this is distributed / these types of questions are answered. </p>
+","c matlab thread-safety mex"
+"99","JSP link submitting data to struts form bean","<p>I am making a JSP page that links to a page where it will pull a list of data from the database depending on the user who is logged in. I am using a DataSourceRealm type authentication so I pull the username with a <code>request.geRemoteUser()</code> and want to submit that to my form when I click the link but I cannot figure out how to do that, my link code is:</p>
+
+<pre><code>&lt;li&gt;&lt;html:link forward=""showEnrolled""&gt;View Enrolled Classes&lt;/html:link&gt;&lt;/li&gt;
+</code></pre>
+
+<p>And my form just needs the username to run. Is there anyway I can get it to send the username along with the forward?</p>
+","jsp struts-1"
+"100","Limit of a function satisfying an inequality","<p>If $f(x)+f(y)\leq f(x+y)$ and $f:\mathbb{R}\to\mathbb{R}$, then can we find $\lim_{x\to 0} \frac {f(x)}{x}$?</p>
+
+<p>I am not sure whether the question is correct.Thank you.(I tried this idea: $f(x)=f(x+y-y)\ge f(x+y)+f(-y)\ge f(x)+f(y)+f(-y)\implies f(y)\leq -f(-y)$ but after that I seem to be hitting a roadblock.</p>
+
+<p>Thank you in advance.</p>
+","calculus inequality limit functional-equations"
