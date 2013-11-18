@@ -1,10 +1,11 @@
 import util
+import re
 import numpy as np
 
 class NaiveBayes:
 
     def __init__(self, trainingSet):
-        self.X_train, self.Y_train = util.mergeTitlesAndBodies(trainingSet)
+        self.X_train, self.Y_train, self.qids = util.mergeTitlesAndBodies(trainingSet)
         self._createVocabulary_()
         self.X_train = self._convertData_(self.X_train)
         self._generateTags_()
@@ -24,11 +25,13 @@ class NaiveBayes:
         """
         vocab = set()
         for x in self.X_train:
-            # trivial word split and purification
-            for word in x.split():
+            # split text using regex, split on characters other than [\w']
+            for word in re.findall(r"[\w']+", x):
                 word = util.purify(word)
                 vocab.add(word)
         vocab.remove("")
+        # remove one-character word
+        vocab = [word for word in vocab if len(word) > 1]
         self.vocab = dict(zip(vocab, range(len(vocab))))
 
     def _generateTags_(self):
@@ -48,10 +51,8 @@ class NaiveBayes:
         rows = []
         for x in X:
             row = [0] * len(self.vocab)
-            for word in x.split():
+            for word in re.findall(r"[\w']+", x):
                 word = util.purify(word)
-                if word == "":
-                    continue
                 if not self.vocab.has_key(word):
                     continue
                 row[self.vocab[word]] += 1
@@ -67,7 +68,7 @@ class NaiveBayes:
         num_words = len(self.vocab)
 
         # phi_k_d: phi_k denominator
-        # phi_k_n: phi_k nominator
+        # phi_k_n: phi_k numerator
 
         # laplace smoothing
         phi_k_d = np.ones(2) * num_words
@@ -90,17 +91,27 @@ class NaiveBayes:
 
         return phi_k, phi_y
 
+    def train(self):
+        """
+        train for all tags
+        """
+        self.phi_k_list = []
+        self.phi_y_list = []
+        for tag in self.tags:
+            phi_k, phi_y = self._trainOnOneTag_(tag)
+            self.phi_k_list.append(phi_k)
+            self.phi_y_list.append(phi_y)
+
     def test(self, testingSet):
         """
         return a list of lists. Each row represents a question,
         and is composed of tags predicted.
         """
-        X_test, Y_test = util.mergeTitlesAndBodies(testingSet)
+        X_test, Y_test, test_qids = util.mergeTitlesAndBodies(testingSet)
         X_test = self._convertData_(X_test)
 
         num_words = len(self.vocab)
 
-        print "TESTING BAYES"
         num_questions = len(X_test)
         for i in range(num_questions):
             tag_prob = []
@@ -119,18 +130,10 @@ class NaiveBayes:
 
             tag_prob = sorted(dict(zip(range(len(tag_prob)), tag_prob)).items(),\
                               key=lambda x:x[1], reverse=True)
-            print tag_prob
-
+            
+            print test_qids[i], ' : ',
+            for j in range(5):
+                print self.tags[tag_prob[j][0]],
+            print 
     #TODO use classfication/regression to predict k (#tags) for each question 
-
-    def train(self):
-        """
-        train for all tags
-        """
-        self.phi_k_list = []
-        self.phi_y_list = []
-        for tag in self.tags:
-            phi_k, phi_y = self._trainOnOneTag_(tag)
-            self.phi_k_list.append(phi_k)
-            self.phi_y_list.append(phi_y)
 

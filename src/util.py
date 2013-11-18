@@ -89,6 +89,7 @@ def mergeTitlesAndBodies(dataset):
     # ]
     X = []
     Y = []
+    qids = []
     for example in dataset:
         if len(example) == 3:
             qid, title, body = example
@@ -103,6 +104,7 @@ def mergeTitlesAndBodies(dataset):
         body = stripHTMLTags(body)
         X.append(title + ' ' + body)
         Y.append(tags.split())
+        qids.append(qid)
     X = np.array(X)
     Y = np.array(Y)
-    return (X, Y)
+    return (X, Y, qids)
