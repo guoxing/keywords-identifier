@@ -52,10 +52,22 @@ def countTags(dataset, suffix):
             print >> f, '{0:40} : {1:10} : {2:.2f}%'\
                     .format(tag, count, count / float(total_count) * 100)
 
+def readinStopwords():
+    with open("stop-words-list.txt", "r") as f:
+        return [purify(word.strip()) for word in f]
+
+def removeStopwords(vocab, stopWordsList):
+    filteredList = []
+    for word in vocab:
+        if word not in stopWordsList:
+            filteredList.append(word)
+    return filteredList
+
 def purify(word):
     """
     remove punctuations/digits, lower case word
     """
+    # TODO: dont' want to remove c++, c#, .net, etc.
     punc = set(string.punctuation)
     digit = set(string.digits)
     filt = punc.union(digit)

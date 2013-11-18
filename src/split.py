@@ -15,16 +15,23 @@ What does it do:
     (no breaking questions at the beginning and end)
 
 """
-num_qs = 50
-num_files = 2
+num_qs = 100
+num_files = 1
+starts_from = 4000
 input_file = "../data/Train.csv"
-output_prefix = "../data/out"
+output_prefix = "../data/out_" + str(num_qs) + '_' + str(starts_from) + '_'
 
 with open(input_file, "r") as csv:
     curr_qs = 0
     curr_files = 0
     out_f = open(output_prefix + str(curr_files), "w")
+    counter = 0
     for line in csv:
+        if counter < starts_from:
+            if line.find('\r\n') >= 0:
+                counter += 1
+            continue
+
         if out_f.closed:
             out_f = open(output_prefix + str(curr_files), "w")
         out_f.write(line)

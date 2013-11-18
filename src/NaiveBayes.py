@@ -1,5 +1,6 @@
 import util
 import re
+import copy
 import numpy as np
 
 class NaiveBayes:
@@ -14,6 +15,8 @@ class NaiveBayes:
         print "questions count: ", len(self.X_train)
         print "time complexity: ", len(self.tags) * len(self.vocab) * len(self.X_train)
         print "Parsed the training data"
+        #for word in self.vocab:
+            #print word
 
     def _createVocabulary_(self):
         """
@@ -32,6 +35,8 @@ class NaiveBayes:
         vocab.remove("")
         # remove one-character word
         vocab = [word for word in vocab if len(word) > 1]
+        stopwords_list = util.readinStopwords()
+        vocab = util.removeStopwords(vocab, stopwords_list)
         self.vocab = dict(zip(vocab, range(len(vocab))))
 
     def _generateTags_(self):
@@ -91,10 +96,26 @@ class NaiveBayes:
 
         return phi_k, phi_y
 
+    def _trainOnNumOfTags_(self):
+        """
+        use linear regression to predict number of tags
+        """
+        Y_num_tags = [len(y) for y in self.Y_train]
+        
+        X_clip = []
+        for question in self.X_train:
+            row = [int(num > 0) for num in question]
+            X_clip.append(row)
+
+        X = np.vstack([np.ones(len(X_clip)), np.array(X_clip).T]).T
+        self.theta = np.matrix(np.linalg.lstsq(X, Y_num_tags)[0])
+
     def train(self):
         """
         train for all tags
         """
+        self._trainOnNumOfTags_()
+
         self.phi_k_list = []
         self.phi_y_list = []
         for tag in self.tags:
@@ -111,9 +132,22 @@ class NaiveBayes:
         X_test = self._convertData_(X_test)
 
         num_words = len(self.vocab)
-
         num_questions = len(X_test)
+
+
+        numtags_err = 0
+        accuracy = 0
         for i in range(num_questions):
+
+            X_lr = copy.deepcopy(X_test[i])
+            X_lr.insert(0, 1)
+            X_lr = [int(num > 0) for num in X_lr]
+            num_of_tags = int(round(np.dot(self.theta, X_lr)))
+            num_of_tags = max(1, num_of_tags)
+            numtags_err += (num_of_tags - len(Y_test[i])) ** 2
+            if num_of_tags == len(Y_test[i]):
+                accuracy += 1
+
             tag_prob = []
             # compute a probability for each tag
             for j in range(len(self.tags)):
@@ -131,9 +165,10 @@ class NaiveBayes:
             tag_prob = sorted(dict(zip(range(len(tag_prob)), tag_prob)).items(),\
                               key=lambda x:x[1], reverse=True)
             
-            print test_qids[i], ' : ',
-            for j in range(5):
-                print self.tags[tag_prob[j][0]],
-            print 
-    #TODO use classfication/regression to predict k (#tags) for each question 
+            #print test_qids[i], ' : ',
+            #for j in range(5):
+                #print self.tags[tag_prob[j][0]],
+            #print 
 
+        print numtags_err / float(num_questions)
+        print accuracy / float(num_questions)
