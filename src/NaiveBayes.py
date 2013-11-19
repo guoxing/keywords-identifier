@@ -37,7 +37,6 @@ class NaiveBayes:
         vocab = [word for word in vocab if len(word) > 1]
         # remove numbers
         new_vocab = []
-        digit = set(string.digits)
         for word in vocab:
             try:
                 num = float(word)
@@ -167,8 +166,6 @@ class NaiveBayes:
         not_captured_tags_in_5 = 0
         false_positive = 0
         false_negative = 0
-        tags_accuracy_5 = 0
-        tags_accuracy = 0
 
         total_tags = 0
         num_tested_questions = 0
