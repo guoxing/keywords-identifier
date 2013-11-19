@@ -97,8 +97,8 @@ def testSVM(X_train, Y_train, testingSet):
 
 if __name__ == '__main__':
     trainingSet = util.loadDataSet('out_1000_0')
-    testingSet = util.loadDataSet('out_1000_1')
+    testingSet = util.loadDataSet('out_2000_2000_0')
     my_nb = nb.NaiveBayes(trainingSet)
 
-    my_nb.train()
-    my_nb.test(testingSet)
+    #my_nb.train()
+    #my_nb.test(testingSet)

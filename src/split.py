@@ -15,9 +15,9 @@ What does it do:
     (no breaking questions at the beginning and end)
 
 """
-num_qs = 100
+num_qs = 2000
 num_files = 1
-starts_from = 4000
+starts_from = 2000
 input_file = "../data/Train.csv"
 output_prefix = "../data/out_" + str(num_qs) + '_' + str(starts_from) + '_'
 

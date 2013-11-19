@@ -52,15 +52,10 @@ def countTags(dataset, suffix):
             print >> f, '{0:40} : {1:10} : {2:.2f}%'\
                     .format(tag, count, count / float(total_count) * 100)
 
-def readinStopwords():
-    with open("stop-words-list.txt", "r") as f:
-        return [purify(word.strip()) for word in f]
-
-def removeStopwords(vocab, stopWordsList):
-    filteredList = []
-    for word in vocab:
-        if word not in stopWordsList:
-            filteredList.append(word)
+def removeStopwords(vocab):
+    with open("../data/stop-words-list.txt", "r") as f:
+        stopWordsList = [word.strip() for word in f]
+    filteredList = [word for word in vocab if word not in stopWordsList]
     return filteredList
 
 def purify(word):
