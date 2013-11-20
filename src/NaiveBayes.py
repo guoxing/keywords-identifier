@@ -170,6 +170,10 @@ class NaiveBayes:
         total_tags = 0
         num_tested_questions = 0
 
+        tags_counter_real = collections.defaultdict(lambda: 0)
+        tags_counter_predict_5 = collections.defaultdict(lambda: 0)
+        tags_counter_predict = collections.defaultdict(lambda: 0)
+
         for i in range(num_questions):
             if not set(Y_test[i]).issubset(set(self.tags)):
                 continue
@@ -219,14 +223,40 @@ class NaiveBayes:
             for real_tag in Y_test[i]:
                 if real_tag not in predict_tags:
                     false_negative += 1
-            for predict_tag in predict_tags:
+            for predict_tag in ags:
                 if predict_tag not in Y_test[i]:
                     false_positive += 1
+            
+            for real_tag in Y_test[i]:
+                tags_counter_real[real_tag] += 1
+            for predict_tag in predict_5_tags:
+                tags_counter_predict_5[real_tag] += 1
+            for predict_tag in predict_tags:
+                tags_counter_predict[real_tag] += 1
             
             #print test_qids[i], ' : ',
             #for j in range(5):
                 #print self.tags[tag_prob[j][0]],
             #print 
+
+        tags_counter_real = sorted(tags_counter_real.items(), key=lambda x:x[1], reverse=1)
+        tags_counter_predict_5 = sorted(tags_counter_predict_5.items(), key=lambda x:x[1], reverse=1)
+        tags_counter_predict = sorted(tags_counter_predict.items(), key=lambda x:x[1], reverse=1)
+        with open("tags_counter_real", 'w') as f:
+            total_count = sum(tags_counter_real.values());
+            for tag, count in tags_counter_real:
+                print >> f, '{0:40} : {1:10} : {2:.2f}%'\
+                        .format(tag, count, count / float(total_count) * 100)
+        with open("tags_counter_predict_5", 'w') as f:
+            total_count = sum(tags_counter_predict_5.values());
+            for tag, count in tags_counter_predict_5:
+                print >> f, '{0:40} : {1:10} : {2:.2f}%'\
+                        .format(tag, count, count / float(total_count) * 100)
+        with open("tags_counter_predict", 'w') as f:
+            total_count = sum(tags_counter_predict.values());
+            for tag, count in tags_counter_predict:
+                print >> f, '{0:40} : {1:10} : {2:.2f}%'\
+                        .format(tag, count, count / float(total_count) * 100)
 
         print "#questions tested: ", num_tested_questions
         print "#tags square error : ", numtags_err / float(num_tested_questions)

@@ -1,0 +1,5 @@
+1. baseline comparison, random predictor
+2. roc area. http://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve
+3. try different algorthim, svm? lda?
+4. separate question title and body
+5. visualize output
