@@ -11,6 +11,7 @@ import pdb
 import re
 import util
 import NaiveBayes as nb
+import BaselinePredictor as bp
 from collections import defaultdict
 
 def multiLabelClassifier(X_train, Y_train, ngram_range=None):
@@ -98,7 +99,12 @@ def testSVM(X_train, Y_train, testingSet):
 if __name__ == '__main__':
     trainingSet = util.loadDataSet('out_1000_0')
     testingSet = util.loadDataSet('out_2000_2000_0')
-    my_nb = nb.NaiveBayes(trainingSet)
+    #trainingSet = util.loadDataSet('out0')
+    #testingSet = util.loadDataSet('out1')
+    #my_nb = nb.NaiveBayes(trainingSet, 100)
 
     #my_nb.train()
     #my_nb.test(testingSet)
+    my_base = bp.BaselinePredictor(trainingSet, 100)
+    my_base.train()
+    my_base.test(testingSet)

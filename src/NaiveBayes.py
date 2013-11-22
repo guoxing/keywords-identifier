@@ -8,7 +8,8 @@ import numpy as np
 
 class NaiveBayes:
 
-    def __init__(self, trainingSet):
+    def __init__(self, trainingSet, numTags):
+        self.numTags = numTags
         self.X_train, self.Y_train, self.qids = util.mergeTitlesAndBodies(trainingSet)
         self._createVocabulary_()
         self.X_train = self._convertData_(self.X_train)
@@ -18,8 +19,8 @@ class NaiveBayes:
         print "questions count: ", len(self.X_train)
         print "time complexity: ", len(self.tags) * len(self.vocab) * len(self.X_train)
         print "Parsed the training data"
-        for word in self.vocab:
-            print word
+        #for word in self.vocab:
+            #print word
         #for tag in self.tags:
             #print tag
 
@@ -32,14 +33,14 @@ class NaiveBayes:
             Can come up with better vocabulary. (say filter out some words)
         """
         vocab_builder = vocabulary_builder.VocabularyBuilder(self.X_train, "../data/sampleCorpus.txt", "../data/stop-words-list.txt")
-        vocab = vocab_builder.buildVocabulary(0.05)
+        vocab = vocab_builder.buildVocabulary(0.01)
         # remove one-character word
         vocab = [word for word in vocab if len(word) > 1]
         # remove numbers
         new_vocab = []
         for word in vocab:
             try:
-                num = float(word)
+                float(word)
             except:
                 word = word.strip("'")
                 #word = "".join(ch for ch in word if ch not in digit)
@@ -57,16 +58,11 @@ class NaiveBayes:
         Generate a set of tags from Y_train.
         """
         #self.tags = list(set([tag for l in self.Y_train for tag in l]))
-        tags_count = collections.defaultdict(lambda: 0)
-        for tags in self.Y_train:
-            for tag in tags:
-                tags_count[tag] += 1
-        tags_count = sorted(tags_count.items(), key=lambda x:x[1], reverse=True)
+        tags_count, total_count = util.getCountsOfTags(self.Y_train)
         self.tags = []
-        num_of_tags = 200
         curr = 0
         for tag, count in tags_count:
-            if curr > num_of_tags:
+            if curr > self.numTags:
                 break
             self.tags.append(tag)
             curr += 1
@@ -163,7 +159,8 @@ class NaiveBayes:
 
         numtags_err = 0
         numtags_accuracy = 0
-        not_captured_tags_in_5 = 0
+        false_negative_5 = 0
+        false_positive_5 = 0
         false_positive = 0
         false_negative = 0
 
@@ -212,7 +209,10 @@ class NaiveBayes:
                 predict_5_tags.append(self.tags[tag_prob[j][0]])
             for real_tag in Y_test[i]:
                 if real_tag not in predict_5_tags:
-                    not_captured_tags_in_5 += 1
+                    false_negative_5 += 1
+            for predict_tag in predict_5_tags:
+                if predict_tag not in Y_test[i]:
+                    false_positive_5 += 1
             #print "=============="
             #print "predict : ", predict_5_tags
             #print "real : ", Y_test[i]
@@ -223,46 +223,45 @@ class NaiveBayes:
             for real_tag in Y_test[i]:
                 if real_tag not in predict_tags:
                     false_negative += 1
-            for predict_tag in ags:
+            for predict_tag in predict_tags:
                 if predict_tag not in Y_test[i]:
                     false_positive += 1
             
             for real_tag in Y_test[i]:
                 tags_counter_real[real_tag] += 1
             for predict_tag in predict_5_tags:
-                tags_counter_predict_5[real_tag] += 1
+                tags_counter_predict_5[predict_tag] += 1
             for predict_tag in predict_tags:
-                tags_counter_predict[real_tag] += 1
+                tags_counter_predict[predict_tag] += 1
             
             #print test_qids[i], ' : ',
             #for j in range(5):
                 #print self.tags[tag_prob[j][0]],
             #print 
 
+        total_count_real = sum(tags_counter_real.values())
+        total_count_predict_5 = sum(tags_counter_predict_5.values())
+        total_count_predict = sum(tags_counter_predict.values())
         tags_counter_real = sorted(tags_counter_real.items(), key=lambda x:x[1], reverse=1)
         tags_counter_predict_5 = sorted(tags_counter_predict_5.items(), key=lambda x:x[1], reverse=1)
         tags_counter_predict = sorted(tags_counter_predict.items(), key=lambda x:x[1], reverse=1)
         with open("tags_counter_real", 'w') as f:
-            total_count = sum(tags_counter_real.values());
             for tag, count in tags_counter_real:
                 print >> f, '{0:40} : {1:10} : {2:.2f}%'\
-                        .format(tag, count, count / float(total_count) * 100)
+                        .format(tag, count, count / float(total_count_real) * 100)
         with open("tags_counter_predict_5", 'w') as f:
-            total_count = sum(tags_counter_predict_5.values());
             for tag, count in tags_counter_predict_5:
                 print >> f, '{0:40} : {1:10} : {2:.2f}%'\
-                        .format(tag, count, count / float(total_count) * 100)
+                        .format(tag, count, count / float(total_count_predict_5) * 100)
         with open("tags_counter_predict", 'w') as f:
-            total_count = sum(tags_counter_predict.values());
             for tag, count in tags_counter_predict:
                 print >> f, '{0:40} : {1:10} : {2:.2f}%'\
-                        .format(tag, count, count / float(total_count) * 100)
+                        .format(tag, count, count / float(total_count_predict) * 100)
 
         print "#questions tested: ", num_tested_questions
         print "#tags square error : ", numtags_err / float(num_tested_questions)
-        print "#tags accuracy: ", numtags_accuracy / float(num_tested_questions)
-        print "#average tags not captured by top 5 predictions: ", not_captured_tags_in_5 / float(num_tested_questions)
-        print "tags accuracy (5): ", (total_tags - not_captured_tags_in_5) / float(total_tags)
-        print "#average false positive: ", false_positive / float(num_tested_questions)
-        print "#average false negative: ", false_negative / float(num_tested_questions)
-        print "tags accuracy: ", (total_tags - false_negative) / float(total_tags)
+        print "#tags accuracy : ", numtags_accuracy / float(num_tested_questions)
+        print "precision (5): ", (total_tags - false_negative_5) / float(total_tags - false_negative_5 + false_positive_5)
+        print "recall (5): ", (total_tags - false_negative_5) / float(total_tags)
+        print "precision : ", (total_tags - false_negative) / float(total_tags - false_negative + false_positive)
+        print "recall : ", (total_tags - false_negative) / float(total_tags)

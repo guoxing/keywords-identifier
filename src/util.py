@@ -38,13 +38,18 @@ def computeErrorRate(examples, classifier):
             numErrors += 1
     return 1.0 * numErrors / len(examples)
 
-def countTags(dataset, suffix):
+def getCountsOfTags(Y):
     tags_count = collections.defaultdict(lambda: 0)
-    for example in dataset:
-        tags = example[-1]
-        for tag in tags.split():
-            tags_count[tag] += 1;
-    total_count = sum(tags_count.values());
+    for tags in Y:
+        for tag in tags:
+            tags_count[tag] += 1
+    total_count = sum(tags_count.values())
+    tags_count = sorted(tags_count.items(), key=lambda x:x[1], reverse=True)
+    return tags_count, total_count
+
+def countTags(dataset, suffix):
+    X, Y, qids = mergeTitlesAndBodies(dataset)
+    tags_count, total_count = getCountsOfTags(Y)
     with open("tags_count_" + suffix, 'w') as f:
         print >> f, "total_count: ", total_count
         sorted_tags = sorted(tags_count.items(), key=lambda x:x[1], reverse=1)
